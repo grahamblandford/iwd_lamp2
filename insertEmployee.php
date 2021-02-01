@@ -3,10 +3,6 @@
     Author: T.Kim
     Date: Jan 31, 2021
     Description: Generate employee list and make CSV file 
-
-
-    1. CSV 파일 타입 확인하는 것
-    3. 저장 이전에 테이블에 중복된 값에 표시 가능한지
 -->
 <?php session_start(); ?>
 <!doctype html>
@@ -95,6 +91,8 @@
                 // show the data from file
                 makeTable('csv', $lines);
             }
+        } else if (isset($field_data['showdata'])) {
+            showDataFromDatabase($db_conn);
         }
         // Main page
         else {
@@ -208,7 +206,7 @@
             global $msg;
             if ($type == 'csv') {
                 $header = "<div class='alert alert-danger' role='alert'>
-                The data below has not yet been saved!</div>
+                The data below has not yet been saved! Click the 'Save'button after data check.</div>
                 <form method='POST'>
                 <div class='row g-2 d-flex justify-content-end'>
                 <div class='col-auto'>
@@ -224,7 +222,9 @@
             } else if ($type == 'db') {
                 $header = "<div class=\"alert alert-success\" role=\"alert\">" . $msg . "</div>";
             }
-            echo $header;
+            if (strlen($msg) > 0) {
+                echo $header;
+            }
         }
 
         function showUploadForm()
@@ -233,13 +233,16 @@
 
             <form method="POST" enctype="multipart/form-data">
                 <div class="mb-3">
-                    <label for="formFile" class="form-label">Please select the CSV file...</label>
+                    <label for="formFile" class="form-label">Please select the CSV file... <br> If there is data in the CSV file with the same first, last name, gender and birthday, the data will merged.</label>
                     <div class="row g-2">
                         <div class="col-auto">
                             <input class="form-control" type="file" id="formFile" name="file">
                         </div>
                         <div class="col-auto">
                             <button type="submit" name="submit" class="btn btn-primary" value="submit">Upload</button>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" name="showdata" class="btn btn-secondary" value="showdata">Show Data</button>
                         </div>
                     </div>
                 </div>
