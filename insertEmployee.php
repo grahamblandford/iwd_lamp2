@@ -56,6 +56,8 @@
         $msg = "";
         $field_data = sanitize_html($_POST);
 
+        //dump($_POST);
+
         // Click re-load page
         if (isset($field_data['again'])) {
         ?>
@@ -89,10 +91,12 @@
                     $lines[] = $row;
                 }
                 // show the data from file
+                $msg=1;
                 makeTable('csv', $lines);
-            }
-        } else if (isset($field_data['showdata'])) {
-            showDataFromDatabase($db_conn);
+                
+            } 
+        }else if(isset($field_data['showdata'])){
+            showDataFromDatabase($dbc);
         }
         // Main page
         else {
