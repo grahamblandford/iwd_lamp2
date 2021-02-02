@@ -91,12 +91,11 @@
                     $lines[] = $row;
                 }
                 // show the data from file
-                $msg=1;
                 makeTable('csv', $lines);
                 
             } 
         }else if(isset($field_data['showdata'])){
-            showDataFromDatabase($dbc);
+            showDataFromDatabase($db_conn);
         }
         // Main page
         else {
@@ -223,12 +222,15 @@
                 </div>
                 </form>
                 ";
-            } else if ($type == 'db') {
-                $header = "<div class=\"alert alert-success\" role=\"alert\">" . $msg . "</div>";
-            }
-            if (strlen($msg) > 0) {
                 echo $header;
+            } else if ($type == 'db') {
+                if(strlen($msg)>0){
+                    $header = "<div class=\"alert alert-success\" role=\"alert\">" . $msg . "</div>";
+                    echo $header;
+                }
+                
             }
+       
         }
 
         function showUploadForm()
