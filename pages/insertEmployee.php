@@ -71,12 +71,19 @@
         else if (file_exists($_FILES['file']['tmp_name']) || is_uploaded_file($_FILES['file']['tmp_name'])) {
             // Check the Meta Data
             if ($_FILES['file']['type'] == 'text/csv' && $_FILES['file']['error'] == 0) {
+                $destination_path = '../file/';
+                $destination_file = 'employeeList_' . time() . '.csv';
+                move_uploaded_file($_FILES['file']['tmp_name'], $destination_path . $destination_file);
 
-                $destination_file = '../file/employeeList_' . time() . '.csv';
-                move_uploaded_file($_FILES['file']['tmp_name'], $destination_file);
+                try {
+                    $db_conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    $sql = "INSERT INTO employee_files (file_name) VALUES ('$destination_file')";
+                    $db_conn->exec($sql);
+                } catch (PDOException $e) {
+                    echo $sql . "<br>" . $e->getMessage();
+                }
 
-                if (($handle = fopen($destination_file, "r")) !== FALSE) {
-                
+                if (($handle = fopen($destination_path.$destination_file, "r")) !== FALSE) {
                     while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                         $num = count($data);
                         $lines[] = $data;
@@ -88,7 +95,6 @@
 
                 // show date from database
                 showDataFromDatabase($db_conn);
-
             } else {
                 $msg = 'It is not a CSV file. Please upload again.';
                 makeHeader('fileuploadfail');
@@ -175,7 +181,7 @@
         function makeTable($type, $arg)
         {
             global $table;
-           
+
             $table = "<table class='table table-striped table-hover'><thead>
         <tr>
           <th scope='col'>#</th>
