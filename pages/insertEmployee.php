@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -31,15 +31,16 @@
         }
     </style>
     <!-- Custom styles for this template -->
-    <link href="./css/starter-template.css" rel="stylesheet">
+    <link href="../css/starter-template.css" rel="stylesheet">
 
     <?php
-    define('_SERVER_PATH_', str_replace(basename(__FILE__), "", realpath(__FILE__)));
-    include _SERVER_PATH_ . 'common.php';
+    //define('_SERVER_PATH_', str_replace(basename(__FILE__), "", realpath(__FILE__)));
+    //include _SERVER_PATH_ . 'common.php';
+    include 'common.php';
     $db_conn = connectDB();
 
     // Auto Mock Generator and symfony
-    require_once 'vendor/autoload.php';
+    require_once '../vendor/autoload.php';
 
     ?>
 </head>
@@ -48,7 +49,8 @@
     <div class="container">
         <!-- Load navigationMenu -->
         <?php
-        include _SERVER_PATH_ . 'navigationMenu.php';
+        //include _SERVER_PATH_ . 'navigationMenu.php';
+        include 'navigationMenu.php';
 
         $table = "";
         $header = "";
