@@ -1,5 +1,5 @@
 <!-- 
-    File: JavaScript.js
+    File: csv_generator.php
     Author: T.Kim
     Date: Jan 31, 2021
     Description: Generate employee list and make CSV file 
@@ -37,6 +37,8 @@
 //    define('_SERVER_PATH_', str_replace(basename(__FILE__), "", realpath(__FILE__)));
     //include _SERVER_PATH_ . 'common.php';
     include 'common.php';
+    
+    // It's not needed in this page
     //$db_conn = connectDB();
 
     // Auto Mock Generator and symfony

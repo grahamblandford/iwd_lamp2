@@ -1,5 +1,5 @@
 <!-- 
-    File: JavaScript.js
+    File: InsertEmployee.php
     Author: T.Kim
     Date: Jan 31, 2021
     Description: Generate employee list and make CSV file 
@@ -51,30 +51,19 @@
         //include _SERVER_PATH_ . 'navigationMenu.php';
         include 'navigationMenu.php';
 
-        $table = "";
-        $header = "";
         $lines = array();
         $msg = "";
         $field_data = sanitize_html($_POST);
 
-        //dump($_POST);
-
-        // Click re-load page
-        if (isset($field_data['again'])) {
-        ?>
-            <script>
-                location.href = './insertEmployee.php';
-            </script>
-        <?php
-        }
-        // when file is uploaded...
-        else if (file_exists($_FILES['file']['tmp_name']) || is_uploaded_file($_FILES['file']['tmp_name'])) {
+        // When file is uploaded..
+        if (file_exists($_FILES['file']['tmp_name']) || is_uploaded_file($_FILES['file']['tmp_name'])) {
             // Check the Meta Data
             if ($_FILES['file']['type'] == 'text/csv' && $_FILES['file']['error'] == 0) {
                 $destination_path = '../file/';
                 $destination_file = 'employeeList_' . time() . '.csv';
                 move_uploaded_file($_FILES['file']['tmp_name'], $destination_path . $destination_file);
 
+                // Insert file name to Database
                 try {
                     $db_conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                     $sql = "INSERT INTO employee_files (file_name) VALUES ('$destination_file')";
@@ -83,34 +72,93 @@
                     echo $sql . "<br>" . $e->getMessage();
                 }
 
-                if (($handle = fopen($destination_path.$destination_file, "r")) !== FALSE) {
+                // truncate employee table
+                truncateDB();
+                
+                // set insert count
+                $num = 0;
+
+                // Read file from permanent location
+                if (($handle = fopen($destination_path . $destination_file, "r")) !== FALSE) {
+                    $num = 0;
+                    //RegExp for date "1234-12-12"
+                    $datePattern = "/[0-9]{4}-[0-9]{2}-[0-9]{2}/";
+
                     while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-                        $num = count($data);
-                        $lines[] = $data;
+                        // Read data in one line at a time
+                        // Check the Validation
+         
+                        // FirstName
+                        if (is_string($data[0]) == false) {
+                            $msg = $data[0] . " cannot be used as a First name.";
+                        }
+                        // LastName
+                        elseif (is_string($data[1]) == false) {
+                            $msg = $data[1] . " cannot be used as a Last name.";
+                        }
+                        // MiddleName
+                        elseif ($data[2] != '') {
+                            if (is_string($data[2]) == false)
+                                $msg = $data[2] . " cannot be used as a Middle name.";
+                        }
+                        // Birth Date
+                        elseif (preg_match_all($datePattern, $data[3]) != 1) {
+                            $msg = $data[3] . " cannot be used as a Birth Date.";
+                        }
+                        // Gender
+                        elseif ($data[4] != "Male" && $data[4] != "Female") {
+                            $msg = $data[4] . " cannot be used as a Gender.";
+                        }
+                        // Hired Date
+                        elseif (preg_match_all($datePattern, $data[5]) != 1) {
+                            $msg = $data[5] . " cannot be used as a Hired Date.";
+                        }
+                        // Level
+                        elseif (preg_match_all("/[0-9]{1}/", $data[6]) != 1) {
+                            $msg = $data[6] . " cannot be used as a Level.";
+                        }
+                        // Job Type
+                        elseif ($data[7] != "FT" && $data[7] != "PT") {
+                            $msg = $data[7] . " cannot be used as a Job Type.";
+                        }
+                        // if $msg have message,
+                        if (strlen($msg) != 0) {
+                            makeHeader('red');
+                            break;
+                        } else {
+                            // Data Insert Here
+                            insertEmp($data);
+                            $num++;
+                        }
                     }
                     fclose($handle);
                 }
-                // Check Duplicate and Insert Data
-                duplicateCheck($lines);
+                
+                $msg =  $num . ' data is inserted.';
+
+                //
+                // Duplicate Check Here
+                // 
 
                 // show date from database
-                showDataFromDatabase($db_conn);
+                showDataFromDatabase();
             } else {
                 $msg = 'It is not a CSV file. Please upload again.';
-                makeHeader('fileuploadfail');
+                makeHeader('red');
                 showUploadForm();
             }
         } else if (isset($field_data['showdata'])) {
-            showDataFromDatabase($db_conn);
+            showDataFromDatabase();
         }
         // Main page
         else {
             showUploadForm();
         }
-        function showDataFromDatabase($dbc)
+        function showDataFromDatabase()
         {
+            global $db_conn;
             $temp_arrs = [];
-            $stmt = $dbc->prepare("Select employee_id, last_name, first_name, middle_name, date_of_birth, gender, date_hired, hired_salary_level, job_type, last_updated_user_id from employees");
+            $stmt = $db_conn->prepare("Select employee_id, last_name, first_name, middle_name, date_of_birth, gender, date_hired, hired_salary_level, job_type, last_updated_user_id from employees");
             try {
                 $stmt->execute();
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -128,13 +176,13 @@
                     array_push($temp_arrs, $details);
                 }
                 // showTable
-                makeTable('db', $temp_arrs);
+                makeTable($temp_arrs);
             } catch (Exception $e) {
-                $dbc->rollback();
+                $db_conn->rollback();
                 echo $e->getMessage();
             }
         }
-
+        //
         function duplicateCheck($arg)
         {
             global $msg;
@@ -150,35 +198,36 @@
             } elseif (count($unUnique) == count($arg)) {
                 $msg =  count($unUnique) . ' data is inserted.';
             }
-            insertEmp($db_conn, $unUnique);
         }
 
-        function insertEmp($dbc, $arr)
+        function truncateDB()
         {
+            global $db_conn;
             try {
-                $stmt = $dbc->prepare("TRUNCATE `lamp`.`employees`");
+                $stmt = $db_conn->prepare("TRUNCATE `lamp`.`employees`");
                 $stmt->execute();
             } catch (Exception $e) {
-                $dbc->rollback();
-                echo $e->getMessage();
-            }
-            $stmt = $dbc->prepare("INSERT INTO employees (last_name, first_name, middle_name, date_of_birth, gender, date_hired, hired_salary_level, job_type, last_updated_user_id) values(?, ?, ?, ?, ?, ?, ?, ?, 'CSVinsert')");
-
-            try {
-                $dbc->beginTransaction();
-
-                foreach ($arr as $row) {
-                    $stmt->execute($row);
-                }
-                unset($row);
-                $dbc->commit();
-            } catch (Exception $e) {
-                $dbc->rollback();
+                $db_conn->rollback();
                 echo $e->getMessage();
             }
         }
 
-        function makeTable($type, $arg)
+        function insertEmp($array)
+        {
+            global $db_conn;
+            $stmt = $db_conn->prepare("INSERT INTO employees (last_name, first_name, middle_name, date_of_birth, gender, date_hired, hired_salary_level, job_type, last_updated_user_id) values(?, ?, ?, ?, ?, ?, ?, ?, 'CSVinsert')");
+
+            try {
+                $db_conn->beginTransaction();
+                $stmt->execute($array);
+                $db_conn->commit();
+            } catch (Exception $e) {
+                $db_conn->rollback();
+                echo $e->getMessage();
+            }
+        }
+
+        function makeTable($arg)
         {
             global $table;
 
@@ -196,33 +245,26 @@
         </tr>
       </thead>
       <tbody>";
-            $i = 1;
             foreach ($arg as $v1) {
-                if ($type == 'csv') {
-                    $table = $table . "<tr><th scope='row'>" . $i . "</th>";
-                }
-                $i++;
                 foreach ($v1 as $v2) {
                     $table = $table . "<td>" . $v2 . "</td>";
                 }
                 $table = $table . "</tr>";
             }
             $table = $table . "</tbody></table>";
-            makeHeader($type);
+            makeHeader('green');
             echo $table;
         }
 
         function makeHeader($type)
         {
-            global $header;
-            global $lines;
             global $msg;
-            if ($type == 'db') {
+            if ($type == 'green') {
                 if (strlen($msg) > 0) {
                     $header = "<div class=\"alert alert-success\" role=\"alert\">" . $msg . "</div>";
                     echo $header;
                 }
-            } else if ($type == 'fileuploadfail') {
+            } else if ($type == 'red') {
                 $header = "<div class=\"alert alert-danger\" role=\"alert\">" . $msg . "</div>";
                 echo $header;
             }
