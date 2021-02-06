@@ -202,7 +202,7 @@
                 }
                 if (count($temp_arrs) > 0) {
                     //if Duplicate data is existed                            
-                    $table = "<div class=\"alert alert-danger\" role=\"alert\">There are " . count($temp_arrs) . " duplicate data below.</div><br><table class='table table-striped table-hover'><thead>
+                    $table = "<div class=\"alert alert-danger\" role=\"alert\">There are " . count($temp_arrs) . " duplicate data below.</div><table class='table table-striped table-hover'><thead>
                     <tr>
                     <th scope='col'>Surname</th>
                     <th scope='col'>GivenName</th>
