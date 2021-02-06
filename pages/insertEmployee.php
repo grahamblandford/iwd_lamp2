@@ -16,19 +16,19 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
     <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
-        }
+    .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+    }
 
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
+    @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+            font-size: 3.5rem;
         }
+    }
     </style>
     <!-- Custom styles for this template -->
     <link href="../css/starter-template.css" rel="stylesheet">
@@ -74,7 +74,7 @@
 
                 // truncate employee table
                 truncateDB();
-                
+
                 // set insert count
                 $num = 0;
 
@@ -87,7 +87,7 @@
                     while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                         // Read data in one line at a time
                         // Check the Validation
-         
+
                         // FirstName
                         if (is_string($data[0]) == false) {
                             $msg = $data[0] . " cannot be used as a First name.";
@@ -133,13 +133,11 @@
                     }
                     fclose($handle);
                 }
-                
+
                 $msg =  $num . ' data is inserted.';
 
-                //
                 // Duplicate Check Here
-                // 
-
+                duplicateCheck();
                 // show date from database
                 showDataFromDatabase();
             } else {
@@ -177,26 +175,55 @@
                 }
                 // showTable
                 makeTable($temp_arrs);
+                unset($temp_arrs);
             } catch (Exception $e) {
                 $db_conn->rollback();
                 echo $e->getMessage();
             }
         }
-        //
-        function duplicateCheck($arg)
-        {
-            global $msg;
-            global $db_conn;
 
-            $newArr = array();
-            foreach ($arg as $val) {
-                $newArr[$val[0] . $val[1] . $val[3] . $val[4]] = $val;
-            }
-            $unUnique = array_values($newArr);
-            if (count($unUnique) != count($arg)) {
-                $msg = 'In the uploaded CSV file, there is ' . number_format(count($arg) - count($unUnique)) . ' data with the same name, gender, and birthday. ' . count($unUnique) . ' data is inserted.';
-            } elseif (count($unUnique) == count($arg)) {
-                $msg =  count($unUnique) . ' data is inserted.';
+        function duplicateCheck()
+        {
+            global $db_conn;
+            $temp_arrs = [];
+            $stmt = $db_conn->prepare("Select first_name, middle_name, last_name, date_of_birth, gender From employees Group by first_name, middle_name, last_name, date_of_birth, gender Having count(*)>1");
+
+            try {
+                $stmt->execute();
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    $details = [
+                        $row['last_name'],
+                        $row['first_name'],
+                        $row['middle_name'],
+                        $row['date_of_birth'],
+                        $row['gender'],
+                    ];
+                    array_push($temp_arrs, $details);
+                }
+                if (count($temp_arrs) > 0) {
+                    //if Duplicate data is existed                            
+                    $table = "<div class=\"alert alert-danger\" role=\"alert\">There are " . count($temp_arrs) . " duplicate data below.</div><br><table class='table table-striped table-hover'><thead>
+                    <tr>
+                    <th scope='col'>Surname</th>
+                    <th scope='col'>GivenName</th>
+                    <th scope='col'>MiddleName</th>
+                    <th scope='col'>BirthDate</th>
+                    <th scope='col'>Gender</th>
+                    </tr></thead><tbody>";
+                    foreach ($temp_arrs as $v1) {
+                        foreach ($v1 as $v2) {
+                            $table = $table . "<td>" . $v2 . "</td>";
+                        }
+                        $table = $table . "</tr>";
+                    }
+                    $table = $table . "</tbody></table>";
+                    echo $table;
+                    unset($table);
+                }
+                unset($temp_arrs);
+            } catch (Exception $e) {
+                $db_conn->rollback();
+                echo $e->getMessage();
             }
         }
 
@@ -229,8 +256,6 @@
 
         function makeTable($arg)
         {
-            global $table;
-
             $table = "<table class='table table-striped table-hover'><thead>
         <tr>
           <th scope='col'>#</th>
@@ -254,6 +279,7 @@
             $table = $table . "</tbody></table>";
             makeHeader('green');
             echo $table;
+            unset($table);
         }
 
         function makeHeader($type)
@@ -268,28 +294,34 @@
                 $header = "<div class=\"alert alert-danger\" role=\"alert\">" . $msg . "</div>";
                 echo $header;
             }
+            unset($msg);
+            unset($header);
         }
 
         function showUploadForm()
         {
         ?>
 
-            <form method="POST" enctype="multipart/form-data">
-                <div class="mb-3">
-                    <label for="formFile" class="form-label">Please select the CSV file... <br>Click "Choose File" to select a CSV file and click the Upload button.<br>Please refer to the "CSV Generator" menu for the format of the CSV file.<br>If there is data in the CSV file with the same first, last name, gender and birthday, the data will merged.</label>
-                    <div class="row g-2">
-                        <div class="col-auto">
-                            <input class="form-control" type="file" id="formFile" name="file">
-                        </div>
-                        <div class="col-auto">
-                            <button type="submit" name="submit" class="btn btn-primary" value="submit">Upload</button>
-                        </div>
-                        <div class="col-auto">
-                            <button type="submit" name="showdata" class="btn btn-secondary" value="showdata">Show Data</button>
-                        </div>
+        <form method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="formFile" class="form-label">Please select the CSV file... <br>Click "Choose File" to select
+                    a CSV file and click the Upload button.<br>Please refer to the "CSV Generator" menu for the format
+                    of the CSV file.<br>If there is data in the CSV file with the same first, last name, gender and
+                    birthday, the data will merged.</label>
+                <div class="row g-2">
+                    <div class="col-auto">
+                        <input class="form-control" type="file" id="formFile" name="file">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" name="submit" class="btn btn-primary" value="submit">Upload</button>
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" name="showdata" class="btn btn-secondary" value="showdata">Show
+                            Data</button>
                     </div>
                 </div>
-            </form>
+            </div>
+        </form>
 
         <?php
         }
