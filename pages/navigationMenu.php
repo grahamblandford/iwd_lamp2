@@ -9,9 +9,6 @@
 $base_URL = ($_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://';
 //$base_URL .= ($_SERVER['SERVER_PORT'] != '80') ? $_SERVER['HTTP_HOST'].':'.$_SERVER['SERVER_PORT'] : $_SERVER['HTTP_HOST'];
 $base_URL .= $_SERVER['HTTP_HOST'];
-if($_SERVER['HTTP_HOST'] == '172.16.188.11'){
-  $base_URL .="/Code";
-}
 ?>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
   <div class="container-fluid">
