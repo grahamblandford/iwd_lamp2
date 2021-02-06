@@ -40,8 +40,8 @@
 <body>
     <!-- Load navigationMenu -->
     <?php
-    define('_SERVER_PATH_', str_replace(basename(__FILE__), "", realpath(__FILE__)));
-    include _SERVER_PATH_ . 'pages/navigationMenu.php';
+    //define('_SERVER_PATH_', str_replace(basename(__FILE__), "", realpath(__FILE__)));
+    include 'pages/navigationMenu.php';
     ?>
 
     <main class="container">
