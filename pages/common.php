@@ -35,8 +35,5 @@ function sanitize_html($arg)
     //return the array of sanitized values
     return $sanitizedArray;
 }
-// Test comment by taehyungkim-test account
-// Test comment by taehyungkim-test account on other computer
-// Test comment by taehyungkim-test account on other computer one more
-// Test comment by grahamblandford
+
 ?>

@@ -1,0 +1,15 @@
+#/appspec.yml
+
+version: 0.0
+
+os: linux
+files:
+  - source: /
+    destination: /var/www/html/lamp/
+    overwrite : yes
+
+permissions:
+  - object: /
+    pattern: "**"
+    owner: ubuntu
+    group: ubuntu
