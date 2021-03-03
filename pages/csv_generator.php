@@ -6,6 +6,7 @@
     Date:        January 31st, 2021 (March 1st, 2021)
 
     20210301    GPB Added check_session.php
+    20210303    GPB Added id tags for css corrections    
 -->
 
 <?php 
@@ -139,7 +140,7 @@
                     <option>700</option>
                     <option>800</option>
                 </select>
-                <label for="floatingSelect">Please select the number of employee</label>
+                <label id="floatingSelect-label" for="floatingSelect">Please select the number of employee</label>
             </div>
             <br>
             <div class="d-flex justify-content-end">

@@ -6,6 +6,7 @@
     Date:        January 31st, 2021 (March 1st, 2021)
 
     20210301    GPB Added check_session.php
+    20210303    GPB Added id tags for css corrections
 -->
 <?php 
     session_start(); 
@@ -303,7 +304,7 @@
 
         <form method="POST" enctype="multipart/form-data">
             <div class="mb-3">
-                <label for="formFile" class="form-label">Please select the CSV file... <br>Click "Choose File" to select
+                <label id="label-csv" for="formFile" class="form-label">Please select the CSV file... <br>Click "Choose File" to select
                     a CSV file and click the Upload button.<br>Please refer to the "CSV Generator" menu for the format
                     of the CSV file.<br>If there is data in the CSV file with the same first, last name, gender and
                     birthday, the data will merged.</label>

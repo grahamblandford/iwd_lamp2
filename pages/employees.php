@@ -92,30 +92,82 @@ $_SESSION['PAGE'] = "employees";
     </form>
 
     <!-- Modal to edit employee -->
+
+
     <div class="modal fade" id="edit-employee-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+
+        <div class="modal-dialog modal-md" role="document">
+
             <div class="modal-content">
-                <div class="modal-header">
+                <!-- <div class="modal-header">
                     <h5 class="modal-title" id="edit-employee-modal-label">Employee Details</h5>
-                </div>
+                </div> -->
                 <div class="modal-body" id="edit-employee-modal-body">
-                    <form class="form form-inline" method="POST" style="padding-right: 30px;">
 
-                        <!-- Employee no.-->
-                        <div class="input-group">
-                            <label for="employee-id">No.</label>
-                            <input type="text" size="10" maxlength="10" class="form-control" style="max-width: 50px" id="employee-id" name="employee-id" aria-describedby="employee-id-help" placeholder="" readonly>
-                            <small id="employee-id-help" class="form-text text-muted"></small>
-                        </div>
+                    <div class="container-fluid">
 
-                    </form>
+                        <form id="form-employee" class="form form-inline" method="POST" style="padding-right: 30px;">
+
+                        <fieldset class="bg-light">
+                        <legend class="text-light bg-dark">Employee Details</legend>
+    
+                            <!-- Employee no.-->
+                            <div class="input-group">
+                                <label for="employee-id">No.</label>
+                                <input type="text" size="10" maxlength="10" class="form-control" style="max-width: 100px" id="employee-id" name="employee-id" aria-describedby="employee-id-help" placeholder="" value="" readonly>
+                                <small id="employee-id-help" class="form-text text-muted"></small>
+                            </div>
+
+                            <!-- First & Middle -->
+                            <div class="input-group">
+                                <label for="first-name">First/Middle</label>
+                                <input type="text" size="20" maxlength="50" class="form-control" id="first-name" name="first-name" aria-describedby="first-name-help" placeholder="Enter first name" value="" required>
+                                <small id="first-name-help" class="form-text text-muted"></small>
+
+                                <input type="text" size="20" maxlength="50" class="form-control" id="middle-name" name="middle-name" aria-describedby="middle-name-help" placeholder="Enter middle name" value="">
+                                <small id="middle-name-help" class="form-text text-muted"></small>
+                            </div>
+
+                            <!-- Last -->
+                            <div class="input-group">
+                                <label for="last-name">Last</label>
+                                <input type="text" size="30" maxlength="50" class="form-control" id="last-name" name="last-name" aria-describedby="last-name-help" placeholder="Enter last name" value="" required>
+                                <small id="last-name-help" class="form-text text-muted"></small>
+                            </div>
+                            
+                            <!-- <button id="btn-save" form="form-employee" type="submit" class="btn btn-primary" name="btn-save" data-bs-dismiss="modal">Save</button>
+                            <button type="submit" class="btn btn-secondary close" form="form-cancel" data-bs-dismiss="modal" aria-label="Cancel">
+                                Cancel
+                            </button> -->
+
+                            <table>
+                                <tr>
+                                <td><button id="btn-save" form="form-employee" type="submit" class="btn btn-primary btn-crud" name="btn-save" data-bs-dismiss="modal">Save</button></td>
+                                <td><button type="submit" class="btn btn-secondary btn-crud close" form="form-cancel" data-bs-dismiss="modal" aria-label="Cancel">
+                                    Cancel
+                                    </button></td>
+                                </tr>
+                            </table>
+
+                        </fieldset>
+
+                        </form>
+
+                    </div>
+<!-- 
+                    <div class="modal-footer">
+                        <button id="btn-save" form="form-employee" type="submit" class="btn btn-primary" name="btn-save" data-bs-dismiss="modal">Save</button>
+                        <button type="submit" class="btn btn-secondary close" form="form-cancel" data-bs-dismiss="modal" aria-label="Cancel">
+                            Cancel
+                        </button>
+                    </div> -->
+
+                    <!-- empty form for cancel button -->
+                    <form id="form-cancel" hidden>
+                    <form>
+
                 </div>
-                <div class="modal-footer">
-                    <button id="btn-save" type="button" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
-                    <button type="button" class="btn btn-secondary close" data-bs-dismiss="modal" aria-label="Cancel">
-                        Cancel
-                    </button>
-                </div>
+
             </div>
         </div>
     </div>
