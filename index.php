@@ -9,7 +9,7 @@
 
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
     <style>
     .bd-placeholder-img {
         font-size: 1.125rem;
@@ -55,7 +55,7 @@
     </main><!-- /.container -->
 
     <!-- Optional JavaScript -->
-    <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="././vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- commit update test by original accout by taehyung kim not taehyung kim-test -->
 
 </body>

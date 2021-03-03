@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
     <style>
     .bd-placeholder-img {
         font-size: 1.125rem;
@@ -327,7 +327,7 @@
         }
         ?>
         <!-- Optional JavaScript -->
-        <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="./vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     </div>
 </body>
 
