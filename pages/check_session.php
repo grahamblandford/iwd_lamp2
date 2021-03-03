@@ -14,7 +14,7 @@ if ( !empty( $_SESSION['CURRENT_USER'] ) ) {
 	$user_id = $_SESSION['CURRENT_USER'];
 }
 else {
-	header("Location: ./pages/login.php");
+	header("Location: /pages/login.php");
 	die();
 }
 ?>

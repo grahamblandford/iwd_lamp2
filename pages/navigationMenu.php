@@ -37,7 +37,6 @@ $base_URL .= $_SERVER['HTTP_HOST'];
             <li><a class="dropdown-item" href="<?php echo $base_URL . "./pages/insertEmployee.php" ?>">Load CSV > Employees</a></li>
           </ul>
         </li>
-
         <li class="nav-item active">
           <a class="nav-link" aria-current="page" href="<?php echo $base_URL . "./pages/employees.php" ?>">Employees</a>
         </li>
