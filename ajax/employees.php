@@ -1,12 +1,20 @@
 <?php
 header("Content-Type: application/json");
-// include $_SERVER['DOCUMENT_ROOT'] . 'pages/common.php';
 
-getEmployees();
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    
+    $response = array("status" => "OK");
+    $response['post'] = $_POST;
+    
+    echo json_encode($response);
+    exit(1);
+        
+} else {
+    getEmployees();
+}
 
 // Get Employees
 function getEmployees() {
-    // include('../pages/common.php');
 
     $db_conn = connectDB();
 

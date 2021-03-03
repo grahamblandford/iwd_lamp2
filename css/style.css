@@ -8,9 +8,8 @@
 
 body {
     padding-top: 5rem;   
-    font-family: 'Metrophobic', sans-serif;
+    font-family: 'Catamaran', 'Metrophobic', sans-serif;
     font-size: 16px;
-    text-align: center;
 }
 
 .bd-placeholder-img {
@@ -31,38 +30,38 @@ body {
     margin-top: 40px;
 }
 
-.form-login {
+.form {
     margin-top: 30px;
     display: inline-block;
 }
 
-.form-login .form-group {
+.form .form-group {
     margin-bottom: 10px !important;
 }
 
-.form-login .form-check-inline {
+.form .form-check-inline {
     margin: 5px 15px;
 }
 
-.form-login label {
+.form label {
     width: 85px;
     justify-content: left !important;
 }
 
-.form-login .label-checkbox {
+.form .label-checkbox {
     width: 80px !important;
 }
 
-.form-login input[type=text] {
+.form input[type=text] {
     width: 200px;
 }
 
-.form-login fieldset {
+.form fieldset {
     padding: 20px;
     border-radius: 10px;
 }
 
-.form-login legend {
+.form legend {
     padding-left: 10px;
     border-radius: 10px;
     border: 5px;
@@ -73,7 +72,37 @@ body {
     margin-left: 10px;
 }
 
-td {
+/* name column */
+#tbody-employees > tr > :nth-child(3){ 
     text-align: left;
 }
 
+#div-employees {
+    max-height: 380px;
+    width: 100%;
+    margin: 0;
+    overflow-y: auto;
+    text-align: center;
+}
+
+.container-crud {
+    margin: 10px 0 0 10px;
+}
+
+.btn-crud {
+    min-width: 100px;
+}
+
+.btn-crud img {
+    color: white;
+}
+
+/* .modal-dialog {
+    overflow-y: initial !important
+}
+
+.modal-body {
+    height: 400px;
+    max-height: 400px;
+    overflow-y: auto;
+} */

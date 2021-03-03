@@ -6,6 +6,18 @@
 
 $(document).ready(function() {
 
+    $("#form-employees").submit( function(event){
+		$.post("../ajax/employees.php", $(this).serialize(), displayEmployee);
+		event.preventDefault();	 
+	});
+
+    // function to display the employee form
+    var displayEmployee = function(response) {
+        $("#edit-employee-modal").modal('show');
+        console.log(response);
+    }
+
+    // function to show employees table
     var showEmployees = function(response) {
 
         // console.log(response);        

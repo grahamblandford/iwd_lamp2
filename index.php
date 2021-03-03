@@ -27,8 +27,8 @@ include_once("./pages/check_session.php");
 
     <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Metrophobic&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Catamaran&display=swap" rel="stylesheet">
 
     <!-- jQuery AJAX -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
