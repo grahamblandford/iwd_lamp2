@@ -1,0 +1,79 @@
+.backgroundColor {
+    background:darkgray
+}
+
+.fontColor {
+    color: darkblue;
+}
+
+body {
+    padding-top: 5rem;   
+    font-family: 'Metrophobic', sans-serif;
+    font-size: 16px;
+    text-align: center;
+}
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
+}
+
+.container-login {
+    margin-top: 40px;
+}
+
+.form-login {
+    margin-top: 30px;
+    display: inline-block;
+}
+
+.form-login .form-group {
+    margin-bottom: 10px !important;
+}
+
+.form-login .form-check-inline {
+    margin: 5px 15px;
+}
+
+.form-login label {
+    width: 85px;
+    justify-content: left !important;
+}
+
+.form-login .label-checkbox {
+    width: 80px !important;
+}
+
+.form-login input[type=text] {
+    width: 200px;
+}
+
+.form-login fieldset {
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.form-login legend {
+    padding-left: 10px;
+    border-radius: 10px;
+    border: 5px;
+}
+
+.btn-login {
+    margin-top: 25px;
+    margin-left: 10px;
+}
+
+td {
+    text-align: left;
+}
+
