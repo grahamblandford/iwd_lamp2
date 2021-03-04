@@ -60,6 +60,9 @@ $_SESSION['PAGE'] = "login";
 
 $error = "";
 
+$user_id = "";
+$password = "";
+
 // Check if we are attempting a login
 // POST
 if (isset($_POST['login']))

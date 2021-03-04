@@ -11,10 +11,37 @@ $(document).ready(function() {
 		event.preventDefault();	 
 	});
 
+    $("#form-employee").submit( function(event){
+		$.post("../ajax/employees.php", $(this).serialize(), saveEmployee);
+		event.preventDefault();	 
+	});
+
+    // function post-save actions
+    var saveEmployee = function(response) {
+
+        // Reset action
+        $('#save-action').val("");
+
+        if (response.status == "OK") {
+
+            // Show employees
+            $.get("../ajax/employees.php", showEmployees);
+
+            // Dismiss the modal
+            $("#edit-employee-modal").modal('hide');
+
+        } else {
+            // show error!
+        }
+    }
+
     // function to display the employee form
     var displayEmployee = function(response) {
 
-        console.log(response);
+        // Reset action
+        $('#action').val("");
+
+// console.log(response);
         let employee;
 
         if (response.status == "OK" || response.employee.length()) {
@@ -42,7 +69,7 @@ $(document).ready(function() {
     // function to show employees table
     var showEmployees = function(response) {
 
-        // console.log(response);        
+// console.log(response);        
         let employee;
 
         if (response.status == "OK" || response.employees.length()) {
@@ -70,7 +97,6 @@ $(document).ready(function() {
                 '</tr>');
         }
     }
-
     $.get("../ajax/employees.php", showEmployees);
 });
 

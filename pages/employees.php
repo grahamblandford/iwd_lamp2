@@ -43,8 +43,8 @@ $_SESSION['PAGE'] = "employees";
 
     <?php
     // Load common
-    define('__ROOT__', dirname(__FILE__));
-    require_once(__ROOT__ . "/common.php");
+    // define('__ROOT__', dirname(__FILE__));
+    // require_once(__ROOT__ . "/common.php");
 
     // Auto Mock Generator and symfony
     require_once '../vendor/autoload.php';
@@ -175,13 +175,13 @@ $_SESSION['PAGE'] = "employees";
 
                             <table>
                                 <tr>
-                                    <td><button id="btn-save" form="form-employee" type="submit" class="btn btn-primary btn-crud" name="btn-save" data-bs-dismiss="modal">Save</button></td>
+                                    <input id="save-action" type="text" name="save-action" value="" hidden>
+                                    <td><input type="submit" class="btn btn-primary btn-crud" id="btn-save" name="btn-save" onclick="(function(){ document.getElementById('save-action').value='Save'; })()"></td>
                                     <td><button type="submit" class="btn btn-secondary btn-crud close" form="form-cancel" data-bs-dismiss="modal" aria-label="Cancel">Cancel</button></td>
                                 </tr>
                             </table>
 
                         </fieldset>
-
                     </form>
 
                     <!-- empty form for cancel button -->
@@ -189,7 +189,6 @@ $_SESSION['PAGE'] = "employees";
                         <form>
 
                 </div>
-
             </div>
         </div>
     </div>

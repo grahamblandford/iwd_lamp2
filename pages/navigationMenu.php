@@ -7,11 +7,20 @@
 
     20210301    GPB Move List functions to separate dropdown menu, Added Logout ability, Employees link
     20210303    GPB Corrected links to pages 
+    20210304    GPB Corrected HTTPS check
 -->
 <?php
 
-$base_URL = ($_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://';
+
+// $base_URL = ( ($_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://' );
+
+$https = false;
+if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
+    $https = true;
+}
+$base_URL = ($https == true) ? 'https://' : 'http://';
 $base_URL .= $_SERVER['HTTP_HOST'];
+
 ?>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
 
@@ -62,7 +71,6 @@ $base_URL .= $_SERVER['HTTP_HOST'];
       <?php
       }
       ?>
-
     </div>
   </div>
 </nav>

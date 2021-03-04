@@ -42,16 +42,16 @@ USE `lamp`;
 DROP TABLE IF EXISTS `employees`;
 CREATE TABLE `employees` (
   `employee_id` int(11) NOT NULL,
-  `first_name` varchar(255) NOT NULL,
-  `middle_name` varchar(255) NOT NULL,
-  `last_name` varchar(255) NOT NULL,
+  `first_name` varchar(50) NOT NULL,
+  `middle_name` varchar(50) NULL,
+  `last_name` varchar(50) NOT NULL,
   `job_type` varchar(2) NOT NULL DEFAULT 'FT',
   `date_of_birth` date NOT NULL,
   `gender` varchar(10) NOT NULL,
   `date_hired` date NOT NULL,
   `hired_salary_level` int(11) NOT NULL DEFAULT 1,
   `last_updated` datetime NOT NULL DEFAULT current_timestamp(),
-  `last_updated_user_id` varchar(255) NOT NULL
+  `last_updated_user_id` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------

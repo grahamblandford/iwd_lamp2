@@ -7,7 +7,7 @@
 -->
 
 <?php
-session_start();
+// session_start();
 
 // Check for session user
 if ( !empty( $_SESSION['CURRENT_USER'] ) ) {
