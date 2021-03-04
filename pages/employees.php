@@ -64,7 +64,7 @@ $_SESSION['PAGE'] = "employees";
         <div id="div-employees" class="container-fluid">
             <legend class="text-light bg-dark" style="margin-top: 10px">Employees</legend>
             <table id="table-employees" class="table table-light table-responsive table-striped">
-                <thead class="table-dark">
+                <thead id="thead-employees" class="table-dark">
                     <tr>
                         <th scope="col"></th>
                         <th scope="col">No.</th>
@@ -84,7 +84,7 @@ $_SESSION['PAGE'] = "employees";
         <div class="container-fluid container-crud">
             <table>
                 <tr>
-                    <td><input type="submit" class="btn btn-success btn-crud" name="btn-add" value="Add"></td>
+                    <td><input type="submit" form="form-employees" class="btn btn-success btn-crud" name="btn-add" value="Add"></td>
                     <td><input type="submit" class="btn btn-secondary btn-warning btn-crud" name="btn-edit" value="Edit"></td>
                 </tr>
             </table>
@@ -94,7 +94,7 @@ $_SESSION['PAGE'] = "employees";
     <!-- Modal to edit employee -->
 
 
-    <div class="modal fade" id="edit-employee-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="edit-employee-modal" style="opacity:0.97 !important;"tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
         <div class="modal-dialog modal-md" role="document">
 
@@ -104,7 +104,7 @@ $_SESSION['PAGE'] = "employees";
                 </div> -->
                 <div class="modal-body" id="edit-employee-modal-body">
 
-                    <div class="container-fluid">
+                    <!-- <div class="container-fluid"> -->
 
                         <form id="form-employee" class="form form-inline" method="POST" style="padding-right: 30px;">
 
@@ -135,17 +135,55 @@ $_SESSION['PAGE'] = "employees";
                                 <small id="last-name-help" class="form-text text-muted"></small>
                             </div>
                             
-                            <!-- <button id="btn-save" form="form-employee" type="submit" class="btn btn-primary" name="btn-save" data-bs-dismiss="modal">Save</button>
-                            <button type="submit" class="btn btn-secondary close" form="form-cancel" data-bs-dismiss="modal" aria-label="Cancel">
-                                Cancel
-                            </button> -->
+                            <!-- job type -->
+                            <div class="input-group">
+                                <label for="job-type">Part/Full-time</label>
+                                <select class="selectpicker form-control" style="max-width: 220px;" id="job-type" name="job-type" aria-describedby="job-type-help" placeholder="Enter job type" required>
+                                    <option value="FT" default>Full-time</option>
+                                    <option value="PT">Part-time</option>
+                                </select>
+                                <small id="job-type-help" class="form-text text-muted"></small>
+                            </div>
+
+                            <!-- date of birth -->
+                            <div class="input-group">
+                                <label for="date-of-birth">Date of Birth</label>
+                                <input type="date" size="30" maxlength="50" class="form-control" id="date-of-birth" name="date-of-birth" aria-describedby="date-of-birth-help" placeholder="Enter date of birth" value="" required>
+                                <small id="date-of-birth-help" class="form-text text-muted"></small>
+                            </div>
+
+                            <!-- gender -->
+                            <div class="input-group">
+                                <label for="gender">Gender</label>
+                                <select class="selectpicker form-control" style="max-width: 220px;" id="gender" name="gender" aria-describedby="gender-help" placeholder="Enter gender" required>
+                                    <option value="Male" default>Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <small id="gender-help" class="form-text text-muted"></small>
+                            </div>
+
+                            <!-- date hired -->
+                            <div class="input-group">
+                                <label for="date-hired">Hired Date</label>
+                                <input type="date" size="30" maxlength="50" class="form-control" id="date-hired" name="date-hired" aria-describedby="date-hired-help" placeholder="Enter date hired" value="" required>
+                                <small id="date-hired-help" class="form-text text-muted"></small>
+                            </div>
+
+                            <!-- Salary Level -->
+                            <div class="input-group">
+                                <label for="hired-salary-level">Salary Level</label>
+                                <input type="number" min="1" max="9" step="1" size="2" maxlength="2" 
+                                        class="form-control" id="hired-salary-level" name="hired-salary-level" 
+                                        aria-describedby="hired-salary-level-help" placeholder="Enter salary level" 
+                                        value="1" required>
+                                <small id="hired-salary-level-help" class="form-text text-muted"></small>
+                            </div>
 
                             <table>
                                 <tr>
                                 <td><button id="btn-save" form="form-employee" type="submit" class="btn btn-primary btn-crud" name="btn-save" data-bs-dismiss="modal">Save</button></td>
-                                <td><button type="submit" class="btn btn-secondary btn-crud close" form="form-cancel" data-bs-dismiss="modal" aria-label="Cancel">
-                                    Cancel
-                                    </button></td>
+                                <td><button type="submit" class="btn btn-secondary btn-crud close" form="form-cancel" data-bs-dismiss="modal" aria-label="Cancel">Cancel</button></td>
                                 </tr>
                             </table>
 
@@ -153,14 +191,7 @@ $_SESSION['PAGE'] = "employees";
 
                         </form>
 
-                    </div>
-<!-- 
-                    <div class="modal-footer">
-                        <button id="btn-save" form="form-employee" type="submit" class="btn btn-primary" name="btn-save" data-bs-dismiss="modal">Save</button>
-                        <button type="submit" class="btn btn-secondary close" form="form-cancel" data-bs-dismiss="modal" aria-label="Cancel">
-                            Cancel
-                        </button>
-                    </div> -->
+                    <!-- </div> -->
 
                     <!-- empty form for cancel button -->
                     <form id="form-cancel" hidden>

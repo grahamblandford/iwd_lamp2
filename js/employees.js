@@ -13,8 +13,30 @@ $(document).ready(function() {
 
     // function to display the employee form
     var displayEmployee = function(response) {
-        $("#edit-employee-modal").modal('show');
+
         console.log(response);
+        let employee;
+
+        if (response.status == "OK" || response.employee.length()) {
+
+            employee = response.employee[0];
+
+            $('#employee-id').val(employee.employee_id);
+            $('#first-name').val(employee.first_name);
+            $('#middle-name').val(employee.middle_name);
+            $('#last-name').val(employee.last_name);
+            $('#job-type').val(employee.job_type);
+            $('#date-of-birth').val(employee.date_of_birth);
+            $('#gender').val(employee.gender);
+            $('#date-hired').val(employee.date_hired);
+            $('#hired-salary-level').val(employee.hired_salary_level);
+
+            // Show the modal form
+            $("#edit-employee-modal").modal('show');
+        
+        } else {
+            // show error!
+        }
     }
 
     // function to show employees table

@@ -26,6 +26,22 @@ body {
     }
 }
 
+@media only screen and (max-width: 768px) {
+    
+    /* Remove header columns for mobile */
+    #thead-employees > tr > :nth-child(5)
+    , #thead-employees > tr > :nth-child(7)
+    , #thead-employees > tr > :nth-child(8) { 
+        display: none;
+    }
+    
+    /* Remove body columns for mobile */
+    #tbody-employees > tr > :nth-child(5)
+    , #tbody-employees > tr > :nth-child(7)
+    , #tbody-employees > tr > :nth-child(8) { 
+        display: none;
+    }
+}
 .container-login {
     margin-top: 40px;
 }
@@ -33,6 +49,10 @@ body {
 .form {
     margin-top: 30px;
     display: inline-block;
+}
+
+#form-employee {
+    margin-top: 0 !important;
 }
 
 .form-inline {
@@ -53,6 +73,11 @@ body {
 
 label {
     width: 180px;
+    justify-content: left !important;
+}
+
+#form-employee label {
+    width: 120px;
     justify-content: left !important;
 }
 
@@ -110,6 +135,7 @@ legend {
     text-align: center;
 }
 
+
 .container-crud {
     margin: 10px 0 0 10px;
 }
@@ -122,12 +148,17 @@ legend {
     color: white;
 }
 
-/* .modal-dialog {
-    overflow-y: initial !important
+#edit-employee-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    vertical-align: middle;
 }
 
-.modal-body {
-    height: 400px;
-    max-height: 400px;
-    overflow-y: auto;
-} */
+#edit-employee-modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 10%;
+}

@@ -1,14 +1,29 @@
 <?php
 header("Content-Type: application/json");
 
+// POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
-    $response = array("status" => "OK");
-    $response['post'] = $_POST;
-    
-    echo json_encode($response);
-    exit(1);
+    // Edit
+    if ( (isset($_POST['selected']) && $_POST['selected'] > "0") ) {
+
+        // $response = array("status" => "Edit");
+        // $response['post'] = $_POST;
         
+        // echo json_encode($response);
+        // exit(1);
+        getEmployee();
+
+    // Add new
+    } else {
+        $response = array("status" => "Add");
+        $response['post'] = $_POST;
+        
+        echo json_encode($response);
+        exit(1);
+    }
+
+// GET
 } else {
     getEmployees();
 }
@@ -54,6 +69,64 @@ function getEmployees() {
             $response['employees'] = array();
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 array_push($response['employees'], $row);
+            }
+            echo json_encode($response);
+        } else {
+            echo '{ "status": "None" }';
+        }
+    } else {
+        echo "<p>Error: " . $stmt->errorCode() . "<br>Message: " . implode($stmt->errorInfo()) . "</p><br>";
+
+        // close database connection
+        $db_conn = null;
+        exit(1);
+    }
+    $db_conn = null;
+}
+
+// Get Employee
+function getEmployee() {
+
+    $db_conn = connectDB();
+
+    $employee_id = $_POST['selected'][0];
+
+    // SQL query
+    $querySQL = "SELECT
+                e.employee_id
+                , e.first_name
+                , e.middle_name
+                , e.last_name
+                , trim(concat(e.first_name, ' ', e.middle_name, ' ', e.last_name)) as full_name
+                , e.job_type
+                , e.date_of_birth
+                , e.gender
+                , e.date_hired
+                , e.hired_salary_level
+                , e.last_updated
+                , e.last_updated_user_id
+             FROM employees as e 
+             WHERE e.employee_id = :employee_id";
+
+    $data = array(":employee_id" => $employee_id);  
+
+    // prepare query
+    $stmt = $db_conn->prepare($querySQL);
+
+    // prepare error check
+    if (!$stmt) {
+        echo "<p>Error: " . $db_conn->errorCode() . "<br>Message: " . implode($db_conn->errorInfo()) . "</p><br>";
+        exit(1);
+    }
+    $status = $stmt->execute($data);
+    if ($status) {
+
+        if ($stmt->rowCount() == 1) {
+            $response = array("status" => "OK");
+            $response['info'] = $_SERVER;
+            $response['employee'] = array();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push($response['employee'], $row);
             }
             echo json_encode($response);
         } else {
