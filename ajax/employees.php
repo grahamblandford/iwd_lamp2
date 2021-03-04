@@ -4,24 +4,37 @@ header("Content-Type: application/json");
 // POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
-    // Edit
-    if ( (isset($_POST['selected']) && $_POST['selected'] > "0") ) {
+    if ( (isset($_POST['action']) && $_POST['action'] == "edit") ) {
 
-        // $response = array("status" => "Edit");
-        // $response['post'] = $_POST;
-        
-        // echo json_encode($response);
-        // exit(1);
-        getEmployee();
+        if ( (isset($_POST['selected']) && $_POST['selected'] > "0") ) {
 
-    // Add new
-    } else {
-        $response = array("status" => "Add");
-        $response['post'] = $_POST;
-        
-        echo json_encode($response);
-        exit(1);
+            getEmployee();
+        }
+
+    } else if ( (isset($_POST['action']) && $_POST['action'] == "add") ) {
+
+        initEmployee();
     }
+
+
+    // // Edit
+    // if ( (isset($_POST['selected']) && $_POST['selected'] > "0") ) {
+
+    //     // $response = array("status" => "Edit");
+    //     // $response['post'] = $_POST;
+        
+    //     // echo json_encode($response);
+    //     // exit(1);
+    //     getEmployee();
+
+    // // Add new
+    // } else {
+    //     $response = array("status" => "Add");
+    //     $response['post'] = $_POST;
+        
+    //     echo json_encode($response);
+    //     exit(1);
+    // }
 
 // GET
 } else {
@@ -119,6 +132,57 @@ function getEmployee() {
         exit(1);
     }
     $status = $stmt->execute($data);
+    if ($status) {
+
+        if ($stmt->rowCount() == 1) {
+            $response = array("status" => "OK");
+            $response['info'] = $_SERVER;
+            $response['employee'] = array();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push($response['employee'], $row);
+            }
+            echo json_encode($response);
+        } else {
+            echo '{ "status": "None" }';
+        }
+    } else {
+        echo "<p>Error: " . $stmt->errorCode() . "<br>Message: " . implode($stmt->errorInfo()) . "</p><br>";
+
+        // close database connection
+        $db_conn = null;
+        exit(1);
+    }
+    $db_conn = null;
+}
+
+// Init a new Employee
+// Can load defaults here
+function initEmployee() {
+
+    $db_conn = connectDB();
+
+    // SQL query
+    $querySQL = 'SELECT
+                "" as employee_id
+                , "" as first_name
+                , "" as middle_name
+                , "" as last_name
+                , "FT" as job_type
+                , "" as date_of_birth
+                , "Male" as gender
+                , now() as date_hired
+                , 1 as hired_salary_level
+             FROM dual';
+
+    // prepare query
+    $stmt = $db_conn->prepare($querySQL);
+
+    // prepare error check
+    if (!$stmt) {
+        echo "<p>Error: " . $db_conn->errorCode() . "<br>Message: " . implode($db_conn->errorInfo()) . "</p><br>";
+        exit(1);
+    }
+    $status = $stmt->execute();
     if ($status) {
 
         if ($stmt->rowCount() == 1) {

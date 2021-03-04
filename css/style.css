@@ -81,9 +81,24 @@ label {
     justify-content: left !important;
 }
 
+.form-login .input-group {
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: left;
+}
+
+.form-login label {
+    width: 100px;
+}
+
 #label-csv, #floatingSelect-label {
     width: inherit;
 }
+
+/* #form-login label {
+    text-align: inherit;
+    justify-content: left !important;
+} */
 
 #floatingSelect {
     min-width: inherit;
@@ -98,7 +113,7 @@ input[type=text] {
 
 }
 
-input-group select  {
+.input-group select {
     min-width: 285px;
 }
 
@@ -118,7 +133,7 @@ legend {
 }
 
 .btn-login {
-    margin-top: 25px;
+    margin-top: 0;
     margin-left: 10px;
 }
 
@@ -128,8 +143,9 @@ legend {
 }
 
 #div-employees {
-    max-height: 380px;
+    max-height: 80vh;
     width: 100%;
+    height: 80vh;
     margin: 0;
     overflow-y: auto;
     text-align: center;

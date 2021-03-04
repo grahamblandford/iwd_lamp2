@@ -124,20 +124,20 @@ if (isset($_POST['login']))
 
     <div class="container-fluid container-login">
 
-        <form class="form form-inline form-login" method="POST">
+        <form id="form-login" class="form form-inline form-login" method="POST">
             <fieldset class="backgroundColor">
                 <legend class="text-light bg-dark">Please Log In</legend>
 
                 <!-- User id -->
                 <div class="input-group">
-                    <label for="user-id">User</label>
+                    <label id="label-user-id" for="user-id">User</label>
                     <input type="text" size="10" maxlength="20" class="form-control" id="user-id" name="user-id" aria-describedby="user-id-help" placeholder="Enter your username" value="<?php echo $user_id; ?>" required>
                     <small id="user-id-help" class="form-text text-muted"></small>
                 </div>
 
                 <!-- Password -->
                 <div class="input-group">
-                    <label for="password">Password</label>
+                    <label id="label-password" for="password">Password</label>
                     <input type="password" size="30" maxlength="50" class="form-control" id="password" name="password" aria-describedby="password-help" placeholder="Enter your password" value="<?php echo $password; ?>" required>
                     <small id="password-help" class="form-text text-muted"></small>
                 </div>

@@ -18,7 +18,7 @@ $base_URL .= $_SERVER['HTTP_HOST'];
   <div class="container-fluid">
 
     <a class="navbar-brand" href="<?php echo $base_URL . "/index.php" ?>">LAMP 2 Project</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleDefault" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 

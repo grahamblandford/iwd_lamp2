@@ -33,11 +33,9 @@ $_SESSION['PAGE'] = "employees";
     <link href="https://fonts.googleapis.com/css2?family=Metrophobic&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Catamaran&display=swap" rel="stylesheet">
 
-    <!-- jQuery AJAX -->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 
     <!-- Custom JS -->
-    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="../js/employees.js"></script>
 
     <!-- Custom styles for this template -->
@@ -82,19 +80,19 @@ $_SESSION['PAGE'] = "employees";
         </div>
 
         <div class="container-fluid container-crud">
+            <!-- Use this hidden element to pass action -->
+            <input id="action" type="text" name="action" hidden>
             <table>
                 <tr>
-                    <td><input type="submit" form="form-employees" class="btn btn-success btn-crud" name="btn-add" value="Add"></td>
-                    <td><input type="submit" class="btn btn-secondary btn-warning btn-crud" name="btn-edit" value="Edit"></td>
+                    <td><input type="submit" class="btn btn-success btn-crud" name="btn-add" value="Add" onclick="(function(){ document.getElementById('action').value='add'; })()"></td>
+                    <td><input type="submit" class="btn btn-secondary btn-warning btn-crud" name="btn-edit" value="Edit" onclick="(function(){ document.getElementById('action').value='edit'; })()"></td>
                 </tr>
             </table>
         </div>
     </form>
 
     <!-- Modal to edit employee -->
-
-
-    <div class="modal fade" id="edit-employee-modal" style="opacity:0.97 !important;"tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="edit-employee-modal" style="opacity:0.97 !important;" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
         <div class="modal-dialog modal-md" role="document">
 
@@ -104,13 +102,11 @@ $_SESSION['PAGE'] = "employees";
                 </div> -->
                 <div class="modal-body" id="edit-employee-modal-body">
 
-                    <!-- <div class="container-fluid"> -->
-
-                        <form id="form-employee" class="form form-inline" method="POST" style="padding-right: 30px;">
+                    <form id="form-employee" class="form form-inline" method="POST" style="padding-right: 30px;">
 
                         <fieldset class="bg-light">
-                        <legend class="text-light bg-dark">Employee Details</legend>
-    
+                            <legend class="text-light bg-dark">Employee Details</legend>
+
                             <!-- Employee no.-->
                             <div class="input-group">
                                 <label for="employee-id">No.</label>
@@ -134,7 +130,7 @@ $_SESSION['PAGE'] = "employees";
                                 <input type="text" size="30" maxlength="50" class="form-control" id="last-name" name="last-name" aria-describedby="last-name-help" placeholder="Enter last name" value="" required>
                                 <small id="last-name-help" class="form-text text-muted"></small>
                             </div>
-                            
+
                             <!-- job type -->
                             <div class="input-group">
                                 <label for="job-type">Part/Full-time</label>
@@ -173,29 +169,24 @@ $_SESSION['PAGE'] = "employees";
                             <!-- Salary Level -->
                             <div class="input-group">
                                 <label for="hired-salary-level">Salary Level</label>
-                                <input type="number" min="1" max="9" step="1" size="2" maxlength="2" 
-                                        class="form-control" id="hired-salary-level" name="hired-salary-level" 
-                                        aria-describedby="hired-salary-level-help" placeholder="Enter salary level" 
-                                        value="1" required>
+                                <input type="number" min="1" max="9" step="1" size="2" maxlength="2" class="form-control" id="hired-salary-level" name="hired-salary-level" aria-describedby="hired-salary-level-help" placeholder="Enter salary level" value="1" required>
                                 <small id="hired-salary-level-help" class="form-text text-muted"></small>
                             </div>
 
                             <table>
                                 <tr>
-                                <td><button id="btn-save" form="form-employee" type="submit" class="btn btn-primary btn-crud" name="btn-save" data-bs-dismiss="modal">Save</button></td>
-                                <td><button type="submit" class="btn btn-secondary btn-crud close" form="form-cancel" data-bs-dismiss="modal" aria-label="Cancel">Cancel</button></td>
+                                    <td><button id="btn-save" form="form-employee" type="submit" class="btn btn-primary btn-crud" name="btn-save" data-bs-dismiss="modal">Save</button></td>
+                                    <td><button type="submit" class="btn btn-secondary btn-crud close" form="form-cancel" data-bs-dismiss="modal" aria-label="Cancel">Cancel</button></td>
                                 </tr>
                             </table>
 
                         </fieldset>
 
-                        </form>
-
-                    <!-- </div> -->
+                    </form>
 
                     <!-- empty form for cancel button -->
                     <form id="form-cancel" hidden>
-                    <form>
+                        <form>
 
                 </div>
 
