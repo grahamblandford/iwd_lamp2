@@ -22,6 +22,7 @@ $(document).ready(function() {
         // Reset action
         $('#save-action').val("");
 
+console.log(response);
         if (response.status == "OK") {
 
             // Show employees
@@ -41,7 +42,7 @@ $(document).ready(function() {
         // Reset action
         $('#action').val("");
 
-// console.log(response);
+console.log(response);
         let employee;
 
         if (response.status == "OK" || response.employee.length()) {
@@ -69,7 +70,7 @@ $(document).ready(function() {
     // function to show employees table
     var showEmployees = function(response) {
 
-// console.log(response);        
+console.log(response);        
         let employee;
 
         if (response.status == "OK" || response.employees.length()) {
