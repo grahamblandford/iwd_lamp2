@@ -127,8 +127,8 @@ function updateEmployee() {
     $db_conn = connectDB();
     
     // SQL query
-    $querySQL = "UPDATE employees as e
-                    SET
+    $querySQL = "update employees as e
+                    set
                     e.first_name        = :first_name
                     , e.middle_name     = :middle_name
                     , e.last_name       = :last_name
@@ -139,7 +139,7 @@ function updateEmployee() {
                     , e.hired_salary_level = :hired_salary_level
                     , e.last_updated    = now()
                     , e.last_updated_user_id = :session_user_id
-                WHERE e.employee_id = :employee_id";
+                where e.employee_id = :employee_id";
 
     $session_user_id = $_SESSION['CURRENT_USER']['user_id'];
     $row = $_SESSION['data'];
@@ -203,7 +203,7 @@ function insertEmployee() {
     $db_conn = connectDB();
     
     // SQL query
-    $querySQL = "INSERT INTO employees (
+    $querySQL = "insert into employees (
                     first_name
                     , middle_name
                     , last_name
@@ -213,7 +213,7 @@ function insertEmployee() {
                     , date_hired
                     , hired_salary_level
                     , last_updated_user_id
-                ) VALUES (
+                ) values (
                     :first_name
                     , :middle_name
                     , :last_name
