@@ -34,7 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             getEmployee();
         } else {
-            // Error - no selected item
+
+            $response = array("status" => "ERR");
+            $response['errors'] = array();
+            array_push($response['errors'], 'No employee has been selected.');
+            echo json_encode($response);
+            exit(1);
         }
 
     // Add

@@ -22,7 +22,7 @@ $(document).ready(function() {
         // Reset action
         $('#save-action').val("");
 
-console.log(response);
+//console.log(response);
         if (response.status == "OK") {
 
             // Show employees
@@ -32,7 +32,8 @@ console.log(response);
             $("#edit-employee-modal").modal('hide');
 
         } else {
-            // show error!
+            let errors = response.errors;
+            showErrors(errors);
         }
     }
 
@@ -42,10 +43,10 @@ console.log(response);
         // Reset action
         $('#action').val("");
 
-console.log(response);
+//console.log(response);
         let employee;
 
-        if (response.status == "OK" || response.employee.length()) {
+        if (response.status == "OK") {
 
             employee = response.employee[0];
 
@@ -62,15 +63,17 @@ console.log(response);
             // Show the modal form
             $("#edit-employee-modal").modal('show');
         
-        } else {
-            // show error!
+        } else if ( response.status == "ERR" ) {
+
+            let errors = response.errors;
+            showErrors(errors);
         }
     }
 
     // function to show employees table
     var showEmployees = function(response) {
 
-console.log(response);        
+//console.log(response);        
         let employee;
 
         if (response.status == "OK" || response.employees.length()) {
@@ -98,6 +101,28 @@ console.log(response);
                 '</tr>');
         }
     }
+
+    // Function to display errors in a timed
+    // dismissible block
+    function showErrors(errors) {
+
+        if (errors === undefined) {
+            $('#div-errors').html('');
+            return;
+        }
+
+        let html = '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
+
+        errors.forEach(function(e){
+            html += ('<p>' + e + '</p>');
+        });
+        html += '<button type="button" class="btn btn-danger btn-crud close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">OK</span></button></div>';
+        $('#div-errors').html(html);
+
+        setTimeout(function () { showErrors(); }, 3000);
+    }
+
+    // Show all employees
     $.get("../ajax/employees.php", showEmployees);
 });
 

@@ -58,6 +58,8 @@ $_SESSION['PAGE'] = "employees";
     include_once('./navigationMenu.php');
     ?>
 
+    <div id="div-errors" class="container-fluid"></div>
+
     <form method="POST" id="form-employees">
         <div id="div-employees" class="container-fluid">
             <legend class="text-light bg-dark" style="margin-top: 10px">Employees</legend>
