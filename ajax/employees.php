@@ -1,4 +1,5 @@
 <?php
+require_once('../pages/common.php');
 /*
     Title:       employees.php
     Application: INFO-5094 LAMP 2 Employee Project
@@ -8,7 +9,6 @@
 */
 session_start();
 header("Content-Type: application/json");
-// require $_SERVER['DOCUMENT_ROOT'] . 'pages/common.php';
 
 // POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -498,22 +498,5 @@ function checkIsDate($date){
     return (bool)strtotime($date);
 }
 
-// Connect to database using PDO method
-function connectDB()
-{
-    define("DBHOST", "localhost");
-    define("DBDB",   "lamp");
-    define("DBUSER", "lamp");
-    define("DBPW", "LQBXwyMZBpJZwIAn");
 
-    try {
-        $dbconn = new PDO('mysql:host=' . DBHOST . ';dbname=' . DBDB . ';charset=utf8', DBUSER, DBPW);
-
-        $dbconn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        return $dbconn;
-    } catch (Exception $e) {
-        echo 'Failed to obtain database handle : ' . $e->getMessage();
-    }
-}
 ?>
