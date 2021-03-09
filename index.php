@@ -31,7 +31,7 @@ include_once("./pages/check_session.php");
     <link href="https://fonts.googleapis.com/css2?family=Catamaran&display=swap" rel="stylesheet">
 
     <!-- jQuery AJAX -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
     <!-- Custom styles for this template -->
     <link href="./css/style.css" rel="stylesheet">

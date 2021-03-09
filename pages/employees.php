@@ -38,7 +38,7 @@ if ( isset($_SESSION['text-search']) ) {
 
 
     <!-- Custom JS -->
-    <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="../js/employees.js"></script>
 
     <!-- Custom styles for this template -->
