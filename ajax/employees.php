@@ -72,10 +72,21 @@ function getEmployees() {
                 , e.hired_salary_level
                 , e.last_updated
                 , e.last_updated_user_id
-             FROM employees as e 
+             FROM employees as e
              WHERE 1";
 
-    $querySQL .= " order by e.last_name;";
+    // check if we have a filter
+    if ( isset($_GET['text-search']) && strlen($_GET['text-search']) > 0 ) {
+        $_SESSION['text-search'] = $_GET['text-search'];
+        $querySQL .= " and ( e.last_name like :text_search or  e.first_name like :text_search or  e.middle_name like :text_search)";
+    } else {
+        $_SESSION['text-search'] = "";        
+    }
+
+    $querySQL .= " ORDER BY e.last_name;";
+
+    $text_search = '%' . $_SESSION['text-search'] . '%';
+    $data = array(":text_search" => $text_search);
 
     // prepare query
     $stmt = $db_conn->prepare($querySQL);
@@ -85,12 +96,14 @@ function getEmployees() {
         echo "<p>Error: " . $db_conn->errorCode() . "<br>Message: " . implode($db_conn->errorInfo()) . "</p><br>";
         exit(1);
     }
-    $status = $stmt->execute();
+
+    $status = $stmt->execute($data);
     if ($status) {
 
         if ($stmt->rowCount() > 0) {
             $response = array("status" => "OK");
-            $response['info'] = $_SERVER;
+            $response['session'] = $_SESSION;
+            $response['get'] = $_GET;
 
             $path = $_SERVER['DOCUMENT_ROOT'] . 'pages/common.php';
             $response['path'] = array("path" => $path);

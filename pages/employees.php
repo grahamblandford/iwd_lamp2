@@ -3,6 +3,9 @@ session_start();
 include_once("check_session.php");
 
 $_SESSION['PAGE'] = "employees";
+if ( isset($_SESSION['text-search']) ) {
+    unset($_SESSION['text-search']);
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -56,12 +59,15 @@ $_SESSION['PAGE'] = "employees";
     <!-- Load navigationMenu -->
     <?php
     include_once('./navigationMenu.php');
+    include_once('./search-bar.php');
     ?>
 
     <div id="div-errors" class="container-fluid"></div>
 
     <form method="POST" id="form-employees">
+
         <div id="div-employees" class="container-fluid">
+
             <legend class="text-light bg-dark" style="margin-top: 10px">Employees</legend>
             <table id="table-employees" class="table table-light table-responsive table-striped">
                 <thead id="thead-employees" class="table-dark">
@@ -91,7 +97,19 @@ $_SESSION['PAGE'] = "employees";
                 </tr>
             </table>
         </div>
+
     </form>
+
+    <form id="form-search" method="GET">
+            <?php
+            $fvalue = "";
+            if (isset($_SESSION['text-search'])) {
+                $fvalue = $_SESSION['text-search'];
+            }
+                getSearch($fvalue);
+            ?>
+    </form>
+
 
     <!-- Modal to edit employee -->
     <div class="modal fade" id="edit-employee-modal" style="opacity:0.97 !important;" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

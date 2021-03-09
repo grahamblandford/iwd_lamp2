@@ -6,6 +6,11 @@
 
 $(document).ready(function() {
 
+    $("#form-search").submit( function(event){
+		$.get("../ajax/employees.php", $(this).serialize(), showEmployees);
+		event.preventDefault();	 
+	});
+
     $("#form-employees").submit( function(event){
 		$.post("../ajax/employees.php", $(this).serialize(), displayEmployee);
 		event.preventDefault();	 
@@ -73,7 +78,7 @@ $(document).ready(function() {
     // function to show employees table
     var showEmployees = function(response) {
 
-//console.log(response);        
+//  console.log(response);        
         let employee;
 
         if (response.status == "OK" || response.employees.length()) {
