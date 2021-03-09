@@ -412,7 +412,7 @@ function validateEmployee() {
 	if( !isset($_POST['first-name'] ) ) {
 		$errors[] = "A first name is required";
 	} else {
-		$first_name = $_POST['first-name'];
+		$first_name = trim($_POST['first-name']);
 		if ( strlen($first_name) == 0 ){
 			$errors[] = "A first name is required";
 		} else if (strlen( $first_name ) > 50 ) {
@@ -422,7 +422,7 @@ function validateEmployee() {
 
     // Middle name
 	if( isset($_POST['middle-name'] ) ) {
-		$middle_name = $_POST['middle-name'];
+		$middle_name = trim($_POST['middle-name']);
         if (strlen( $middle_name ) > 50 ) {
 			$errors[] = "The middle name exceeds 50 characters";
 		}
@@ -434,7 +434,7 @@ function validateEmployee() {
 	if( !isset($_POST['last-name'] ) ) {
 		$errors[] = "A last name is required";
 	} else {
-		$last_name = $_POST['last-name'];
+		$last_name = trim($_POST['last-name']);
 		if ( strlen($last_name) == 0 ){
 			$errors[] = "A last name is required";
 		} else if (strlen( $last_name ) > 50 ) {
@@ -446,7 +446,7 @@ function validateEmployee() {
 	if( !isset($_POST['job-type'] ) ) {
 		$errors[] = "A job type is required";
 	} else {
-		$job_type = $_POST['job-type'];
+		$job_type = trim($_POST['job-type']);
 		if ( $job_type != 'FT' && $job_type != 'PT' ){
 			$errors[] = "Job type must be 'PT' or 'FT'";
 		}
@@ -456,7 +456,7 @@ function validateEmployee() {
 	if( !isset($_POST['date-of-birth'] ) ) {
 		$errors[] = "A date of birth is required";
 	} else {
-		$date_of_birth = $_POST['date-of-birth'];
+		$date_of_birth = trim($_POST['date-of-birth']);
 		if ( !checkIsDate($date_of_birth) ){
 			$errors[] = "Date of birth is not a valid date";
 		}
@@ -466,7 +466,7 @@ function validateEmployee() {
 	if( !isset($_POST['gender'] ) ) {
 		$errors[] = "A gender is required";
 	} else {
-		$gender = $_POST['gender'];
+		$gender = trim($_POST['gender']);
 		if ( $gender != 'Female' && $gender != 'Male' && $gender != 'Other' ){
 			$errors[] = "Gender must be 'Female', 'Male' or 'Other'";
 		}
@@ -476,7 +476,7 @@ function validateEmployee() {
 	if( !isset($_POST['date-hired'] ) ) {
 		$errors[] = "A hired date is required";
 	} else {
-		$date_hired = $_POST['date-hired'];
+		$date_hired = trim($_POST['date-hired']);
 		if ( !checkIsDate($date_hired) ){
 			$errors[] = "Date hired is not a valid date";
 		}
@@ -486,13 +486,13 @@ function validateEmployee() {
     if( !isset($_POST['hired-salary-level'] ) ) {
         $errors[] = "A salary level is required";
     } else {
-        $hired_salary_level = (int)$_POST['hired-salary-level'];
+        $hired_salary_level = (int)trim($_POST['hired-salary-level']);
         if ( $hired_salary_level < 0 || $hired_salary_level > 9 ){
             $errors[] = "Salary level must be between 1 and 9";
         }
     }
 
-    $employee_id = $_POST['employee-id'];
+    $employee_id = trim($_POST['employee-id']);
     $_SESSION['data'] = array("employee_id" => $employee_id
                             , "first_name" => $first_name
                             , "middle_name" => $middle_name
@@ -510,6 +510,5 @@ function validateEmployee() {
 function checkIsDate($date){
     return (bool)strtotime($date);
 }
-
 
 ?>
