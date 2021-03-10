@@ -2,7 +2,7 @@
 // Title:       check_session.php
 // Application: INFO-5094 LAMP 2 Employee Project
 // Purpose:     Include to do a check on logged in user
-// Author:      G. Blandford,  Group 5, INFO-5094-01-21W
+// Author:      G. Blandford,  Group 9, INFO-5094-01-21W
 // Date:        March 1st, 2021 (March 1st, 2021)
 
 // 20210308    GPB Added HTTPS check

@@ -15,7 +15,7 @@ if ( isset($_SESSION['text-search']) ) {
         Title:       employees.php
         Application: INFO-5094 LAMP 2 Employee Project
         Purpose:     Handles employee maintenance
-        Author:      G. Blandford, Group 5, INFO-5094-01-21W
+        Author:      G. Blandford, Group 9, INFO-5094-01-21W
         Date:        March 2nd, 2021 (March 2nd, 2021)
     -->
 
