@@ -58,8 +58,13 @@
         // When file is uploaded..
         if (file_exists($_FILES['file']['tmp_name']) || is_uploaded_file($_FILES['file']['tmp_name'])) {
             // Check the Meta Data
-            if ($_FILES['file']['type'] == 'text/csv' && $_FILES['file']['error'] == 0) {
-                $destination_path = '../file/';
+
+            // dump($_FILES);
+            // dump(pathinfo( $_FILES['file']['name'], PATHINFO_EXTENSION));
+                        
+            if ( ($_FILES['file']['type'] == 'text/csv' || (pathinfo( $_FILES['file']['name'], PATHINFO_EXTENSION) == 'csv' && $_FILES['file']['type'] == 'application/vnd.ms-excel'))&& $_FILES['file']['error'] == 0) {
+            // if ($_FILES['file']['type'] == 'text/csv' && $_FILES['file']['error'] == 0) {
+                    $destination_path = '../file/';
                 $destination_file = 'employeeList_' . time() . '.csv';
                 move_uploaded_file($_FILES['file']['tmp_name'], $destination_path . $destination_file);
 
