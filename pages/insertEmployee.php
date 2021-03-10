@@ -1,9 +1,3 @@
-
-<?php
-session_start();
-include_once("./check_session.php");
-
-?>
 <!-- 
     Title:       InsertEmployee.php
     Application: INFO-5094 LAMP 2 Employee Project
@@ -14,6 +8,11 @@ include_once("./check_session.php");
     20210301    GPB Added check_session.php
     20210303    GPB Added id tags for css corrections
 -->
+<?php
+session_start();
+include_once("./check_session.php");
+?>
+
 <!doctype html>
 <html lang="en">
 
