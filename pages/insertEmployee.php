@@ -62,7 +62,10 @@
             // dump($_FILES);
             // dump(pathinfo( $_FILES['file']['name'], PATHINFO_EXTENSION));
                         
-            if ( ($_FILES['file']['type'] == 'text/csv' || (pathinfo( $_FILES['file']['name'], PATHINFO_EXTENSION) == 'csv' && $_FILES['file']['type'] == 'application/vnd.ms-excel'))&& $_FILES['file']['error'] == 0) {
+            if ( ($_FILES['file']['type'] == 'text/csv' 
+                    || (pathinfo( $_FILES['file']['name'], PATHINFO_EXTENSION) == 'csv' 
+                            && $_FILES['file']['type'] == 'application/vnd.ms-excel')) 
+                    && $_FILES['file']['error'] == 0) {
             // if ($_FILES['file']['type'] == 'text/csv' && $_FILES['file']['error'] == 0) {
                     $destination_path = '../file/';
                 $destination_file = 'employeeList_' . time() . '.csv';
