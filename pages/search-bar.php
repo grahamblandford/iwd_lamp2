@@ -4,7 +4,7 @@
     Title:       search-bar.php
     Application: INFO-5094 LAMP 2 Employee Project
     Purpose:     Handles login
-    Author:      G. Blandford,  Group 5, INFO-5094-01-21W
+    Author:      G. Blandford,  Group 9, INFO-5094-01-21W
     Date:        March 8th, 2021 (March 8th, 2021) 
 */
 

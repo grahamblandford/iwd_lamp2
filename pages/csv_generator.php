@@ -1,15 +1,12 @@
-<!-- 
-    Title:       csv_generator.php
-    Application: INFO-5094 LAMP 2 Employee Project
-    Purpose:     Generate employee list and make CSV file
-    Author:      T. Kim,  Group 5, INFO-5094-01-21W
-    Date:        January 31st, 2021 (March 1st, 2021)
+<?php
+//     Title:       csv_generator.php
+//     Application: INFO-5094 LAMP 2 Employee Project
+//     Purpose:     Generate employee list and make CSV file
+//     Author:      T. Kim,  Group 9, INFO-5094-01-21W
+//     Date:        January 31st, 2021 (March 1st, 2021)
 
-    20210301    GPB Added check_session.php
-    20210303    GPB Added id tags for css corrections    
--->
-
-<?php 
+//     20210301    GPB Added check_session.php
+//     20210303    GPB Added id tags for css corrections    
     session_start(); 
     include_once("./check_session.php");    
 ?>

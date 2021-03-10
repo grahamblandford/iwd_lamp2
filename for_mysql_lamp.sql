@@ -3,29 +3,14 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 06, 2021 at 02:00 AM
--- Server version: 10.3.25-MariaDB-0ubuntu0.20.04.1
+-- Generation Time: Mar 10, 2021 at 07:54 AM
+-- Server version: 8.0.23-0ubuntu0.20.04.1
 -- PHP Version: 7.4.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
-
-
-
-DROP USER IF EXISTS `lamp`;
-
-CREATE USER 'lamp'@'%' IDENTIFIED WITH caching_sha2_password BY 'LQBXwyMZBpJZwIAn';
-GRANT USAGE ON *.* TO 'lamp'@'%';
-ALTER USER 'lamp'@'%' REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
-CREATE DATABASE IF NOT EXISTS `lamp`;
-GRANT ALL PRIVILEGES ON `lamp`.* TO 'lamp'@'%';
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `lamp`
@@ -41,18 +26,18 @@ USE `lamp`;
 
 DROP TABLE IF EXISTS `employees`;
 CREATE TABLE `employees` (
-  `employee_id` int(11) NOT NULL,
-  `first_name` varchar(50) NOT NULL,
-  `middle_name` varchar(50) NULL,
-  `last_name` varchar(50) NOT NULL,
+  `employee_id` int NOT NULL,
+  `first_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `middle_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `last_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `job_type` varchar(2) NOT NULL DEFAULT 'FT',
   `date_of_birth` date NOT NULL,
   `gender` varchar(10) NOT NULL,
   `date_hired` date NOT NULL,
-  `hired_salary_level` int(11) NOT NULL DEFAULT 1,
-  `last_updated` datetime NOT NULL DEFAULT current_timestamp(),
-  `last_updated_user_id` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `hired_salary_level` int NOT NULL DEFAULT '1',
+  `last_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_updated_user_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -62,10 +47,43 @@ CREATE TABLE `employees` (
 
 DROP TABLE IF EXISTS `employee_files`;
 CREATE TABLE `employee_files` (
-  `file_id` int(11) NOT NULL,
+  `file_id` int NOT NULL,
   `file_name` varchar(27) NOT NULL,
-  `last_update_time` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `last_update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `salaries`
+--
+
+DROP TABLE IF EXISTS `salaries`;
+CREATE TABLE `salaries` (
+  `salary_level` int NOT NULL,
+  `end_date` datetime NOT NULL,
+  `salary_per_annum` decimal(13,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `user_id` varchar(255) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `address` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`user_id`, `password`, `address`) VALUES
+('admin', '21232f297a57a5a743894a0e4a801fc3', '');
 
 --
 -- Indexes for dumped tables
@@ -84,6 +102,18 @@ ALTER TABLE `employee_files`
   ADD PRIMARY KEY (`file_id`);
 
 --
+-- Indexes for table `salaries`
+--
+ALTER TABLE `salaries`
+  ADD PRIMARY KEY (`salary_level`,`end_date`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`user_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -91,20 +121,11 @@ ALTER TABLE `employee_files`
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `employee_id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `employee_files`
 --
 ALTER TABLE `employee_files`
-  MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT;
-
-
-
-
-
+  MODIFY `file_id` int NOT NULL AUTO_INCREMENT;
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
