@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 06, 2021 at 02:00 AM
+-- Generation Time: Mar 10, 2021 at 10:36 AM
 -- Server version: 10.3.25-MariaDB-0ubuntu0.20.04.1
 -- PHP Version: 7.4.3
 
@@ -34,7 +34,7 @@ DROP TABLE IF EXISTS `employees`;
 CREATE TABLE `employees` (
   `employee_id` int(11) NOT NULL,
   `first_name` varchar(50) NOT NULL,
-  `middle_name` varchar(50) NULL,
+  `middle_name` varchar(50) DEFAULT NULL,
   `last_name` varchar(50) NOT NULL,
   `job_type` varchar(2) NOT NULL DEFAULT 'FT',
   `date_of_birth` date NOT NULL,
@@ -58,6 +58,39 @@ CREATE TABLE `employee_files` (
   `last_update_time` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `salaries`
+--
+
+DROP TABLE IF EXISTS `salaries`;
+CREATE TABLE `salaries` (
+  `salary_level` int(11) NOT NULL,
+  `end_date` datetime NOT NULL,
+  `salary_per_annum` decimal(13,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `user_id` varchar(255) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `address` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`user_id`, `password`, `address`) VALUES
+('admin', '21232f297a57a5a743894a0e4a801fc3', '');
+
 --
 -- Indexes for dumped tables
 --
@@ -75,6 +108,18 @@ ALTER TABLE `employee_files`
   ADD PRIMARY KEY (`file_id`);
 
 --
+-- Indexes for table `salaries`
+--
+ALTER TABLE `salaries`
+  ADD PRIMARY KEY (`salary_level`,`end_date`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`user_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -89,14 +134,6 @@ ALTER TABLE `employees`
 --
 ALTER TABLE `employee_files`
   MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT;
-
-
-DROP USER IF EXISTS `lamp`;
-
-GRANT USAGE ON *.* TO `lamp`@`%` IDENTIFIED BY PASSWORD '*35C8523607F9FDC4AF8B9618CF953EEEFD83275B';
-
-GRANT ALL PRIVILEGES ON `lamp`.* TO `lamp`@`%`;
-
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

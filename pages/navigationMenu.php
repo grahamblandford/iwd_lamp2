@@ -1,16 +1,14 @@
-<!-- 
-    Title:       navigationMenu.php
-    Application: INFO-5094 LAMP 2 Employee Project
-    Purpose:     Main navigation and menu
-    Author:      T. Kim,  Group 5, INFO-5094-01-21W
-    Date:        January 30th, 2021 (March 1st, 2021)
-
-    20210301    GPB Move List functions to separate dropdown menu, Added Logout ability, Employees link
-    20210303    GPB Corrected links to pages 
-    20210304    GPB Corrected HTTPS check
--->
 <?php
 
+// Title:       navigationMenu.php
+// Application: INFO-5094 LAMP 2 Employee Project
+// Purpose:     Main navigation and menu
+// Author:      T. Kim,  Group 9, INFO-5094-01-21W
+// Date:        January 30th, 2021 (March 1st, 2021)
+
+// 20210301    GPB Move List functions to separate dropdown menu, Added Logout ability, Employees link
+// 20210303    GPB Corrected links to pages 
+// 20210304    GPB Corrected HTTPS check
 
 // $base_URL = ( ($_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://' );
 
