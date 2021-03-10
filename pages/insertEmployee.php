@@ -1,3 +1,9 @@
+
+<?php
+session_start();
+include_once("./check_session.php");
+
+?>
 <!-- 
     Title:       InsertEmployee.php
     Application: INFO-5094 LAMP 2 Employee Project
@@ -8,11 +14,6 @@
     20210301    GPB Added check_session.php
     20210303    GPB Added id tags for css corrections
 -->
-<?php 
-    session_start(); 
-    include_once("./check_session.php");    
-?>
-
 <!doctype html>
 <html lang="en">
 
@@ -29,7 +30,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Catamaran&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Metrophobic&display=swap" rel="stylesheet">
-    
+
     <!-- Custom styles for this template -->
     <link href="../css/style.css" rel="stylesheet">
 
@@ -59,28 +60,26 @@
         if (file_exists($_FILES['file']['tmp_name']) || is_uploaded_file($_FILES['file']['tmp_name'])) {
             // Check the Meta Data
 
-             dump($_FILES);
             // dump(pathinfo( $_FILES['file']['name'], PATHINFO_EXTENSION));
-                        
-            if ( ($_FILES['file']['type'] == 'text/csv' 
-                    || (pathinfo( $_FILES['file']['name'], PATHINFO_EXTENSION) == 'csv' 
-                            && $_FILES['file']['type'] == 'application/vnd.ms-excel')) 
-                    && $_FILES['file']['error'] == 0) {
-            // if ($_FILES['file']['type'] == 'text/csv' && $_FILES['file']['error'] == 0) {
+
+            if (($_FILES['file']['type'] == 'text/csv'
+                    || (pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION) == 'csv'
+                        && $_FILES['file']['type'] == 'application/vnd.ms-excel'))
+                && $_FILES['file']['error'] == 0
+            ) {
+                // if ($_FILES['file']['type'] == 'text/csv' && $_FILES['file']['error'] == 0) {
                 $destination_path = '../file/';
                 $destination_file = 'employeeList_' . time() . '.csv';
-                move_uploaded_file($_FILES['file']['tmp_name'], $destination_path . $destination_file);
-
-                // Insert file name to Database
-                try {
-                    $db_conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    $sql = "INSERT INTO employee_files (file_name) VALUES ('$destination_file')";
-                    $db_conn->exec($sql);
-                } catch (PDOException $e) {
-                    echo $sql . "<br>" . $e->getMessage();
-                }
-
-                // truncate employee table
+                if (move_uploaded_file($_FILES['file']['tmp_name'], $destination_path . $destination_file)) {
+                    // Insert file name to Database
+                    try {
+                        $db_conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                        $sql = "INSERT INTO employee_files (file_name) VALUES ('$destination_file')";
+                        $db_conn->exec($sql);
+                    } catch (PDOException $e) {
+                        echo $sql . "<br>" . $e->getMessage();
+                    }
+                    // truncate employee table
                 truncateDB();
 
                 // set insert count
@@ -148,6 +147,16 @@
                 duplicateCheck();
                 // show date from database
                 showDataFromDatabase();
+
+                }else{
+                    $msg = 'File upload failed.';
+                    makeHeader('red');
+                    showUploadForm();    
+                }
+
+
+
+                
             } else {
                 $msg = 'It is not a CSV file. Please upload again.';
                 makeHeader('red');
@@ -310,26 +319,27 @@
         {
         ?>
 
-        <form method="POST" enctype="multipart/form-data">
-            <div class="mb-3">
-                <label id="label-csv" for="formFile" class="form-label">Please select the CSV file... <br>Click "Choose File" to select
-                    a CSV file and click the Upload button.<br>Please refer to the "CSV Generator" menu for the format
-                    of the CSV file.<br>If there is data in the CSV file with the same first, last name, gender and
-                    birthday, the data will merged.</label>
-                <div class="row g-2">
-                    <div class="col-auto">
-                        <input class="form-control" type="file" id="formFile" name="file">
-                    </div>
-                    <div class="col-auto">
-                        <button type="submit" name="submit" class="btn btn-primary" value="submit">Upload</button>
-                    </div>
-                    <div class="col-auto">
-                        <button type="submit" name="showdata" class="btn btn-secondary" value="showdata">Show
-                            Data</button>
+            <form method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label id="label-csv" for="formFile" class="form-label">Please select the CSV file... <br>Click "Choose
+                        File" to select
+                        a CSV file and click the Upload button.<br>Please refer to the "CSV Generator" menu for the format
+                        of the CSV file.<br>If there is data in the CSV file with the same first, last name, gender and
+                        birthday, the data will merged.</label>
+                    <div class="row g-2">
+                        <div class="col-auto">
+                            <input class="form-control" type="file" id="formFile" name="file">
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" name="submit" class="btn btn-primary" value="submit">Upload</button>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" name="showdata" class="btn btn-secondary" value="showdata">Show
+                                Data</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
 
         <?php
         }
