@@ -56,7 +56,7 @@
 
     <?php
     $field_data = sanitize_html($_POST);
-    //dump($field_data);
+    // dump($field_data);
 
     if (isset($field_data['numberEmp'])) {
         employeeGenerator();
@@ -64,6 +64,7 @@
 
     function employeeGenerator()
     {
+
         global $field_data;
         $values = array();
         $number = $field_data['numberEmp'];
@@ -102,6 +103,7 @@
 
             array_push($values, $emps);
         }
+        // dump($values);
         outputCSV($values);
     }
 
