@@ -122,9 +122,6 @@ $(document).ready(function() {
             $('#earliest-retirement-date').val(retirement_full_date);
             $('#retirement-scenario').val(retirement_scenario);
 
-                retirement_full_date = '';
-                retirement_scenario = '';
-
             // Show the modal form
             $("#edit-employee-modal").modal('show');
         
