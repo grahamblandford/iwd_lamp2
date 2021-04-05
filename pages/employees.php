@@ -17,6 +17,9 @@ if ( isset($_SESSION['text-search']) ) {
         Purpose:     Handles employee maintenance
         Author:      G. Blandford, Group 9, INFO-5094-01-21W
         Date:        March 2nd, 2021 (March 2nd, 2021)
+
+                     210404      SKC     Added retirement functionality                
+
     -->
 
     <title>LAMP 2 Project - Employees</title>
@@ -80,6 +83,8 @@ if ( isset($_SESSION['text-search']) ) {
                         <th scope="col">Gender</th>
                         <th scope="col">Hired</th>
                         <th scope="col">Salary</th>
+                        <th scope="col">Earliest Retirement Date</th>
+                        <th scope="col">Retirement Scenario</th>
                     </tr>
                 </thead>
                 <tbody id="tbody-employees">
@@ -193,11 +198,38 @@ if ( isset($_SESSION['text-search']) ) {
                                 <small id="hired-salary-level-help" class="form-text text-muted"></small>
                             </div>
 
+                            <!-- Earliest Retirement Date -->
+                            <div class="input-group">
+                                <label for="earliest-retirement-date">Earliest Retirement Date</label>
+                                <input type="text" size="30" maxlength="50" class="form-control" id="earliest-retirement-date" name="earliest-retirement-date" aria-describedby="earliest-retirement-date-help" placeholder="" value="" readonly>
+                                <small id="earliest-retirement-date-help" class="form-text text-muted"></small>
+                            </div>
+
+                            <!-- Retirement Scenario -->
+                            <div class="input-group">
+                                <label for="retirement-scenario">Retirement Scenario</label>
+                                <input type="text" size="30" maxlength="50" class="form-control" id="retirement-scenario" name="retirement-scenario" aria-describedby="retirement-scenario-help" placeholder="" value="" readonly>
+                                <small id="hired-salary-level-help" class="form-text text-muted"></small>
+                            </div>
+
                             <table>
                                 <tr>
                                     <input id="save-action" type="text" name="save-action" value="" hidden>
                                     <td><input type="submit" class="btn btn-primary btn-crud" id="btn-save" name="btn-save" onclick="(function(){ document.getElementById('save-action').value='Save'; })()"></td>
                                     <td><button type="submit" class="btn btn-secondary btn-crud close" form="form-cancel" data-bs-dismiss="modal" aria-label="Cancel">Cancel</button></td>
+                                    <!-- Show History Functionality | Added by Mykyta Koryliuk -->
+                                    <td>
+                                        <button
+                                            type='button'
+                                            class='btn btn-info btn-crud'
+                                            id='btn-history'
+                                            name='btn-history'
+                                            onclick="(function() { window.open(`./salaryHistory.php?hired=${document.getElementById('date-hired').value}&level=${document.getElementById('hired-salary-level').value}&type=${document.getElementById('job-type').value}`, `_blank`, 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=0,width=500,height=500'); })()"
+                                        >
+                                            Show History
+                                        </button>
+                                    </td>
+                                    <!-- Show History Functionality | Added by Mykyta Koryliuk -->
                                 </tr>
                             </table>
 
