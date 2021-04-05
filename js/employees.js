@@ -47,6 +47,8 @@ $(document).ready(function() {
     var retirement_scenario = '';
 
     // function for getting retirement data
+    // From and including start date
+    // To, but NOT including end date
     function getRetirement (emp, type) {
         if (emp.employee_id) {
             var dob = new Date(emp.date_of_birth);
@@ -57,16 +59,23 @@ $(document).ready(function() {
             var dobDate = dob.getDate();
 
             // Date for Scenario A (Date turning Age 65)
-            var retireA = new Date(dobYear + 65, dobMonth - 1, dobDate);
+            var retireA = new Date(dobYear + 65, dobMonth, dobDate);
 
             var today = new Date();
             var difference1 = today.getTime() - dob.getTime();        
             var difference2 = today.getTime() - hired.getTime();
             
-            // Date for Scenario B (Date when Age + Serbive Years = 85
             // 2682396000000 is the number of milliseconds in 85 years
+            // 1 year = 365.25 days
             var retireBms = (2682396000000 - (difference1 + difference2))/2 + today.getTime();
-            var retireB = new Date(retireBms);
+            var retireBmsDate = new Date(retireBms);
+
+            var retireBYear = retireBmsDate.getFullYear();
+            var retireBMonth = retireBmsDate.getMonth() + 1;
+            var retireBDate = retireBmsDate.getDate();
+
+            // Date for Scenario B (Date when Age + Service Years = 85)
+            var retireB = new Date(retireBYear, retireBMonth, retireBDate);
 
             var retirePriority = retireA <= retireB ? retireA : retireB;
 
@@ -74,18 +83,14 @@ $(document).ready(function() {
             var retirement_month = retirePriority.getMonth();
             var retirement_date = retirePriority.getDate();
 
+            function checkMonthDate (num) {
+                return num < 10 ? "0" + num : num;
+            }
+
             if (type === "mainPage") {
-                if (retirement_month < 10) {
-                    retirement_full_date = retirement_year + "-0" + retirement_month + "-" + retirement_date;       
-                } else {
-                    retirement_full_date = retirement_year + "-" + retirement_month + "-" + retirement_date;   
-                }
+                retirement_full_date = retirement_year + "-" + checkMonthDate(retirement_month) + "-" + checkMonthDate(retirement_date);
             } else {
-                if (retirement_month < 10) {
-                    retirement_full_date = "0" + retirement_month + " / " + retirement_date + " / " + retirement_year;   
-                } else {
-                    retirement_full_date = retirement_month + " / " + retirement_date + " / " + retirement_year;
-                }    
+                retirement_full_date = checkMonthDate(retirement_month) + "/" + checkMonthDate(retirement_date) + "/" + retirement_year;
             }
 
             retirement_scenario = retireA <= retireB ? "A (Date turning Age 65)" : "B (Date when Age + Service Years = 85)";
@@ -121,6 +126,9 @@ $(document).ready(function() {
             $('#hired-salary-level').val(employee.hired_salary_level);
             $('#earliest-retirement-date').val(retirement_full_date);
             $('#retirement-scenario').val(retirement_scenario);
+
+                retirement_full_date = '';
+                retirement_scenario = '';
 
             // Show the modal form
             $("#edit-employee-modal").modal('show');
@@ -191,4 +199,3 @@ $(document).ready(function() {
     // Show all employees
     $.get("../ajax/employees.php", showEmployees);
 });
-
