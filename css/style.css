@@ -149,8 +149,8 @@ legend {
     margin-left: 10px;
 }
 
-/* name column */
-#tbody-employees > tr > :nth-child(3){ 
+
+#tbody-employees > tr, #thead-employees > tr { 
     text-align: left;
 }
 

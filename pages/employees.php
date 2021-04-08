@@ -18,7 +18,8 @@ if ( isset($_SESSION['text-search']) ) {
         Author:      G. Blandford, Group 9, INFO-5094-01-21W
         Date:        March 2nd, 2021 (March 2nd, 2021)
 
-                     210404      SKC     Added retirement functionality                
+        20210404    SKC     Added retirement functionality                
+        20210407    GPB     Change Retirement age to date type                
 
     -->
 
@@ -201,7 +202,7 @@ if ( isset($_SESSION['text-search']) ) {
                             <!-- Earliest Retirement Date -->
                             <div class="input-group">
                                 <label for="earliest-retirement-date">Earliest Retirement Date</label>
-                                <input type="text" size="30" maxlength="50" class="form-control" id="earliest-retirement-date" name="earliest-retirement-date" aria-describedby="earliest-retirement-date-help" placeholder="" value="" readonly>
+                                <input type="date" size="30" maxlength="50" class="form-control" id="earliest-retirement-date" name="earliest-retirement-date" aria-describedby="earliest-retirement-date-help" placeholder="" value="" readonly>
                                 <small id="earliest-retirement-date-help" class="form-text text-muted"></small>
                             </div>
 

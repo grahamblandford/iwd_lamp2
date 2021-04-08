@@ -4,7 +4,8 @@
 // Author:      G. Blandford, Group 5, INFO-5094-01-21W
 // Date:        March 2nd, 2021 (March 2nd, 2021)
 
-//              210404      SKC     Added retirement functionality                
+// 20210404      SKC     Added retirement functionality                
+// 20210407      GPB     Y-m-d format in form                
 
 $(document).ready(function() {
 
@@ -90,7 +91,8 @@ $(document).ready(function() {
             if (type === "mainPage") {
                 retirement_full_date = retirement_year + "-" + checkMonthDate(retirement_month) + "-" + checkMonthDate(retirement_date);
             } else {
-                retirement_full_date = checkMonthDate(retirement_month) + "/" + checkMonthDate(retirement_date) + "/" + retirement_year;
+                //retirement_full_date = checkMonthDate(retirement_month) + "/" + checkMonthDate(retirement_date) + "/" + irement_date) ;
+                retirement_full_date = retirement_year + "-" + checkMonthDate(retirement_month) + "-" + checkMonthDate(retirement_date);
             }
 
             retirement_scenario = retireA <= retireB ? "A (Date turning Age 65)" : "B (Date when Age + Service Years = 85)";
