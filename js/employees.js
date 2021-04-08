@@ -87,7 +87,6 @@ $(document).ready(function() {
                 return num < 10 ? "0" + num : num;
             }
 
-
             retirement_full_date = retirement_year + "-" + checkMonthDate(retirement_month) + "-" + checkMonthDate(retirement_date);
             retirement_scenario = retireA <= retireB ? "A (Date turning Age 65)" : "B (Date when Age + Service Years = 85)";
         } else {
