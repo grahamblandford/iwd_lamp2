@@ -4,11 +4,9 @@
 // Author:      G. Blandford, Group 5, INFO-5094-01-21W
 // Date:        March 2nd, 2021 (March 2nd, 2021)
 
-//              210404      SKC     Added retirement functionality                
-// 20210404      SKC     Added retirement functionality                
-// 20210407      GPB     Y-m-d format in form                
-// 20210410      GPB     Combined Retirement fields & re-wording
-//                       for styling purposes (mobile view)                
+//              20210404      SKC     Added retirement functionality      
+// 				20210410      GPB     Combined Retirement fields & re-wording
+//                                    for styling purposes (mobile view)   
 
 $(document).ready(function() {
 
@@ -91,13 +89,7 @@ $(document).ready(function() {
                 return num < 10 ? "0" + num : num;
             }
 
-            if (type === "mainPage") {
-                retirement_full_date = retirement_year + "-" + checkMonthDate(retirement_month) + "-" + checkMonthDate(retirement_date);
-            } else {
-                //retirement_full_date = checkMonthDate(retirement_month) + "/" + checkMonthDate(retirement_date) + "/" + irement_date) ;
-                retirement_full_date = retirement_year + "-" + checkMonthDate(retirement_month) + "-" + checkMonthDate(retirement_date);
-            }
-
+            retirement_full_date = retirement_year + "-" + checkMonthDate(retirement_month) + "-" + checkMonthDate(retirement_date);
             retirement_scenario = retireA <= retireB ? "Age = 65 (A)" : "Age + Service Years = 85 (B)";
         } else {
             retirement_full_date = '';
@@ -129,10 +121,8 @@ $(document).ready(function() {
             $('#gender').val(employee.gender);
             $('#date-hired').val(employee.date_hired);
             $('#hired-salary-level').val(employee.hired_salary_level);
-
-            // $('#earliest-retirement-date').val(retirement_full_date);
-            // $('#retirement-scenario').val(retirement_scenario);
-            $('#earliest-retirement').val(retirement_full_date + " - " + retirement_scenario);
+            $('#earliest-retirement-date').val(retirement_full_date);
+            $('#retirement-scenario').val(retirement_scenario);
 
             retirement_full_date = '';
             retirement_scenario = '';
