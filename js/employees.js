@@ -4,10 +4,9 @@
 // Author:      G. Blandford, Group 5, INFO-5094-01-21W
 // Date:        March 2nd, 2021 (March 2nd, 2021)
 
-// 20210404      SKC     Added retirement functionality                
-// 20210407      GPB     Y-m-d format in form                
-// 20210410      GPB     Combined Retirement fields & re-wording
-//                       for styling purposes (mobile view)                
+//              20210404      SKC     Added retirement functionality      
+// 				20210410      GPB     Combined Retirement fields & re-wording
+//                                    for styling purposes (mobile view)   
 
 $(document).ready(function() {
 
@@ -50,19 +49,19 @@ $(document).ready(function() {
     var retirement_scenario = '';
 
     // function for getting retirement data
-    // From and including start date
+    // From and including start date, and
     // To, but NOT including end date
-    function getRetirement (emp, type) {
+    function getRetirement (emp) {
         if (emp.employee_id) {
             var dob = new Date(emp.date_of_birth);
             var hired = new Date(emp.date_hired);
 
             var dobYear = dob.getFullYear();
-            var dobMonth = dob.getMonth() + 1;
+            var dobMonth = dob.getMonth();
             var dobDate = dob.getDate();
 
             // Date for Scenario A (Date turning Age 65)
-            var retireA = new Date(dobYear + 65, dobMonth, dobDate);
+            var retireA = new Date(dobYear + 65, dobMonth, dobDate)
 
             var today = new Date();
             var difference1 = today.getTime() - dob.getTime();        
@@ -74,29 +73,23 @@ $(document).ready(function() {
             var retireBmsDate = new Date(retireBms);
 
             var retireBYear = retireBmsDate.getFullYear();
-            var retireBMonth = retireBmsDate.getMonth() + 1;
+            var retireBMonth = retireBmsDate.getMonth();
             var retireBDate = retireBmsDate.getDate();
 
             // Date for Scenario B (Date when Age + Service Years = 85)
             var retireB = new Date(retireBYear, retireBMonth, retireBDate);
 
             var retirePriority = retireA <= retireB ? retireA : retireB;
-
+            
             var retirement_year = retirePriority.getFullYear();
-            var retirement_month = retirePriority.getMonth();
+            var retirement_month = retirePriority.getMonth() + 1;
             var retirement_date = retirePriority.getDate();
 
             function checkMonthDate (num) {
                 return num < 10 ? "0" + num : num;
             }
 
-            if (type === "mainPage") {
-                retirement_full_date = retirement_year + "-" + checkMonthDate(retirement_month) + "-" + checkMonthDate(retirement_date);
-            } else {
-                //retirement_full_date = checkMonthDate(retirement_month) + "/" + checkMonthDate(retirement_date) + "/" + irement_date) ;
-                retirement_full_date = retirement_year + "-" + checkMonthDate(retirement_month) + "-" + checkMonthDate(retirement_date);
-            }
-
+            retirement_full_date = retirement_year + "-" + checkMonthDate(retirement_month) + "-" + checkMonthDate(retirement_date);
             retirement_scenario = retireA <= retireB ? "Age = 65 (A)" : "Age + Service Years = 85 (B)";
         } else {
             retirement_full_date = '';
@@ -117,7 +110,7 @@ $(document).ready(function() {
 
             employee = response.employee[0];
 
-            getRetirement(employee, "editPage");
+            getRetirement(employee);
 
             $('#employee-id').val(employee.employee_id);
             $('#first-name').val(employee.first_name);
@@ -128,13 +121,11 @@ $(document).ready(function() {
             $('#gender').val(employee.gender);
             $('#date-hired').val(employee.date_hired);
             $('#hired-salary-level').val(employee.hired_salary_level);
+            $('#earliest-retirement-date').val(retirement_full_date);
+            $('#retirement-scenario').val(retirement_scenario);
 
-            // $('#earliest-retirement-date').val(retirement_full_date);
-            // $('#retirement-scenario').val(retirement_scenario);
-            $('#earliest-retirement').val(retirement_full_date + " - " + retirement_scenario);
-
-                retirement_full_date = '';
-                retirement_scenario = '';
+            retirement_full_date = '';
+            retirement_scenario = '';
 
             // Show the modal form
             $("#edit-employee-modal").modal('show');
@@ -158,7 +149,7 @@ $(document).ready(function() {
             for (row in response.employees) {
                 employee = response.employees[row];
 
-                getRetirement(employee, "mainPage");
+                getRetirement(employee);
 
                 $("#tbody-employees").append(
                     "<tr>"
@@ -205,3 +196,4 @@ $(document).ready(function() {
     // Show all employees
     $.get("../ajax/employees.php", showEmployees);
 });
+
