@@ -20,6 +20,7 @@ if ( isset($_SESSION['text-search']) ) {
 
         20210404    SKC     Added retirement functionality                
         20210407    GPB     Change Retirement age to date type                
+        20210410    GPB     Combined Retirement fields                
 
     -->
 
@@ -62,8 +63,8 @@ if ( isset($_SESSION['text-search']) ) {
 <body>
     <!-- Load navigationMenu -->
     <?php
-    include_once('./navigationMenu.php');
-    include_once('./search-bar.php');
+        include_once('./navigationMenu.php');
+        include_once('./search-bar.php');
     ?>
 
     <div id="div-errors" class="container-fluid"></div>
@@ -84,8 +85,8 @@ if ( isset($_SESSION['text-search']) ) {
                         <th scope="col">Gender</th>
                         <th scope="col">Hired</th>
                         <th scope="col">Salary</th>
-                        <th scope="col">Earliest Retirement Date</th>
-                        <th scope="col">Retirement Scenario</th>
+                        <th scope="col">Retirement</th>
+                        <th scope="col">Scenario</th>
                     </tr>
                 </thead>
                 <tbody id="tbody-employees">
@@ -128,7 +129,7 @@ if ( isset($_SESSION['text-search']) ) {
                 </div> -->
                 <div class="modal-body" id="edit-employee-modal-body">
 
-                    <form id="form-employee" class="form form-inline" method="POST" style="padding-right: 30px;">
+                    <form id="form-employee" class="form form-inline" method="POST">
 
                         <fieldset class="bg-light">
                             <legend class="text-light bg-dark">Employee Details</legend>
@@ -187,30 +188,36 @@ if ( isset($_SESSION['text-search']) ) {
 
                             <!-- date hired -->
                             <div class="input-group">
-                                <label for="date-hired">Hired Date</label>
+                                <!-- <label for="date-hired">Hired Date</label> -->
+                                <label for="date-hired">Hired / Salary Level</label>
                                 <input type="date" size="30" maxlength="50" class="form-control" id="date-hired" name="date-hired" aria-describedby="date-hired-help" placeholder="Enter date hired" value="" required>
                                 <small id="date-hired-help" class="form-text text-muted"></small>
-                            </div>
+                            <!-- </div> -->
 
                             <!-- Salary Level -->
-                            <div class="input-group">
-                                <label for="hired-salary-level">Salary Level</label>
-                                <input type="number" min="1" max="9" step="1" size="2" maxlength="2" class="form-control" id="hired-salary-level" name="hired-salary-level" aria-describedby="hired-salary-level-help" placeholder="Enter salary level" value="1" required>
+                            <!-- <div class="input-group"> -->
+                                <!-- <label for="hired-salary-level">Salary Level</label> -->
+                                <input type="number" min="1" max="9" step="1" size="2" maxlength="2" style="max-width: 45px;" class="form-control" id="hired-salary-level" name="hired-salary-level" aria-describedby="hired-salary-level-help" placeholder="Enter salary level" value="1" required>
                                 <small id="hired-salary-level-help" class="form-text text-muted"></small>
                             </div>
 
                             <!-- Earliest Retirement Date -->
-                            <div class="input-group">
+                            <!-- <div class="input-group">
                                 <label for="earliest-retirement-date">Earliest Retirement Date</label>
-                                <input type="date" size="30" maxlength="50" class="form-control" id="earliest-retirement-date" name="earliest-retirement-date" aria-describedby="earliest-retirement-date-help" placeholder="" value="" readonly>
+                                <input type="text" style="max-width: 100px;" class="form-control" id="earliest-retirement-date" name="earliest-retirement-date" aria-describedby="earliest-retirement-date-help" placeholder="" value="" readonly>
                                 <small id="earliest-retirement-date-help" class="form-text text-muted"></small>
-                            </div>
+                            </div> -->
 
                             <!-- Retirement Scenario -->
-                            <div class="input-group">
+                            <!-- <div class="input-group">
                                 <label for="retirement-scenario">Retirement Scenario</label>
-                                <input type="text" size="30" maxlength="50" class="form-control" id="retirement-scenario" name="retirement-scenario" aria-describedby="retirement-scenario-help" placeholder="" value="" readonly>
+                                <input type="text" size="30" maxlength="50" class="form-control" id="retirement-scenario" name="retirement-scenario" aria-describedby="retirement-scenario-help" placeholder="" value="" readonly> 
                                 <small id="hired-salary-level-help" class="form-text text-muted"></small>
+                            </div> -->
+                            <div class="input-group">
+                                <label for="earliest-retirement">Earliest Retirement</label>
+                                <input type="text" class="form-control" id="earliest-retirement" name="earliest-retirement" aria-describedby="earliest-retirement-help" placeholder="" value="" readonly>
+                                <small id="earliest-retirement-help" class="form-text text-muted"></small>
                             </div>
 
                             <table>
