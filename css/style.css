@@ -6,6 +6,11 @@
     color: darkblue;
 }
 
+/* fix for modal font */
+html {
+    font-size: 14px;
+  }
+
 body {
     padding-top: 5rem;   
     font-family: 'Catamaran', 'Metrophobic', sans-serif;
