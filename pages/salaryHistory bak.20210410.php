@@ -8,7 +8,7 @@
     Application: INFO-5094 LAMP 2 Employee Project
     Purpose:     Show Salary History
     Author:      M. Koryliuk, Group 9, INFO-5094-01-21W
-    Date:        April 10th, 2021 (April 5th, 2021)
+    Date:        April 7th, 2021 (April 5th, 2021)
 
     20210407    GPB Re-working the code
 */
@@ -43,27 +43,26 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+  <head>
 
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="INFO-5094 LAMP 2 Employee Project">
-        <meta name="author" content="Mykyta Koryliuk">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="INFO-5094 LAMP 2 Employee Project">
+    <meta name="author" content="Mykyta Koryliuk">
 
-        <title>Salary History</title>
+    <title>Salary History</title>
 
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="../vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-        <!-- Google Font -->
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Metrophobic&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Catamaran&display=swap" rel="stylesheet">
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Metrophobic&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Catamaran&display=swap" rel="stylesheet">
 
-        <!-- Custom styles for this template -->
-        <link href="../css/style.css" rel="stylesheet">
-
+    <!-- Custom styles for this template -->
+    <link href="../css/style.css" rel="stylesheet">
     </head>
     <body>
         <div style="margin-top: -40px; margin-bottom: 40px;" class="container">
@@ -73,8 +72,6 @@
                         <tr>
                             <th scope="col" class="text-center">Level</th>
                             <th scope="col" class="text-center">Effective</th>
-            <!-- <th scope="col" class="text-center">StartDate</th>
-            <th scope="col" class="text-center">EndDate</th> -->
                             <th scope="col" class="text-center">
                                 <?php echo $params['type'] == 'FT' ? 'Salary' : 'Hourly Rate' ?>
                             </th>
@@ -88,9 +85,7 @@
                    
                         foreach ($history as $row) {
                             $salaryLevel = $row['salaryLevel'];
-                            $displayDate = $row['displayDate'];
-        //    $startDate = $row['startDate'];
-        //    $endDate = $row['endDate'];
+                            $effectiveDate = $row['effectiveDate'];
                             $rate = $row['rate'];
                             if ($params['type'] == 'PT') {
                                 $rate = ($rate / 261 / 8 );
@@ -99,15 +94,8 @@
                             echo "<tr>
                                     <td class='text-center'>$salaryLevel</td>                                
                                     <td class='text-center'>"
-                                        . $displayDate .
-                                    "</td>";
-;
-            // echo "<td class='text-center'>"
-            //     . $startDate .
-            // "</td>
-            // <td class='text-center'>"
-            //     . $endDate;
-                            echo "</td>
+                                        . $effectiveDate .
+                                    "</td>
                                     <td class='text-center'>$"
                                         . number_format($rate, 2, '.', ',') . 
                                     "</td>
@@ -149,11 +137,6 @@ class CustomDateTime extends DateTimeImmutable{
     {
         return $this->add(new \DateInterval('P1Y'));
     }
-    public function subtractOneYear()
-    {
-        return $this->sub(new \DateInterval('P1Y'));
-    }
-
 }
 
 // Get the salary history for the employee
@@ -167,9 +150,6 @@ function getSalaryHistory(CustomDateTime $hireDate, int $startLevel) {
         $salaryLevel = $startLevel;
         $salaryRate = 0;
         $lastRate = 0;
-        
-        // Set a basedate
-        $baseDate = New CustomDateTime('1900-01-01');
 
         $results = [];
 
@@ -178,73 +158,48 @@ function getSalaryHistory(CustomDateTime $hireDate, int $startLevel) {
             // Add the results and the anniversary date to the array
             $raises = getSalary($salaryLevel, $salaryDate);
 
-            // echo "<pre>Rates for L$salaryLevel: $salaryDate</pre>";
-
-            $count = 0;
-
-            // Our query will return ALL of the valid salary 
-            // rates for the one year 
+            // Now, we should extract any rates for the next year
             foreach($raises as $raise) {
-
-                $count++;
 
                 $raiseEndDate = New CustomDateTime($raise['end_date']);
                 $raiseEffectiveDate = New CustomDateTime($raise['effective_date']);
                 $salaryRate = $raise['salary_per_annum'];
+                $salaryType = "";
 
-                // ANNIVERSARY INCREASE = EFFECTIVE DATE >= the SALARYDATE
-                // ELSE, GENERAL RAISE
-                if ( ( (int)$raiseEffectiveDate->diff($salaryDate)->format('%R%a') >= 0 
-                        ) 
-                        //&& ( (int)$raiseEffectiveDate->diff($baseDate)->format('%R%a') > 0)
-                    ) {
-             
-
-                    // echo "<pre>1. L$salaryLevel From:$raiseEffectiveDate To: to:$raiseEndDate</pre>"; // diff:" . (int)$raiseEffectiveDate->diff($salaryDate)->format('%R%a') . "</pre>";
-
-                    $displayDate = $raiseEffectiveDate;
-                    if (    
-                            (int)$raiseEffectiveDate->diff($baseDate)->format('%R%a') == 0 
-                            || (count($raises) >= $count)
-  
-                        ) {
-                        $displayDate = $salaryDate;
-                    }
-
+                if ( (int)$raiseEndDate->diff($salaryDate)->format('%R%a') > 0 ) {
+                        
                     if ( $salaryRate > $lastRate ) {
                         array_push($results, [
                             'salaryLevel' => $salaryLevel, // Level
                             'rate' => $params['type'] = 'PT' ? $salaryRate : $salaryRate,
-                            'displayDate' => $displayDate->format('Y-m-d'), // Effective Date
-                            'startDate' => $raiseEffectiveDate->format('Y-m-d'), // For Debugging purposes only
-                            'endDate' => $raiseEndDate->format('Y-m-d') // For Debugging purposes only
+                            'effectiveDate' => $raiseEndDate->format('Y-m-d'), // Effective Date
+                            'endDate' => $raiseEndDate // For Debugging purposes only
                         ]);                      
                     }
 
                 } else {
-                    // echo "<pre>2. L$salaryLevel From:$raiseEffectiveDate To: to:$raiseEndDate</pre>"; // diff:" . (int)$raiseEffectiveDate->diff($salaryDate)->format('%R%a') . "</pre>";
-                    
+
                     if ( $salaryRate > $lastRate ) {
                         array_push($results, [
                             'salaryLevel' => $salaryLevel, // Level
-                            'rate' => $params['type'] = 'PT' ? $salaryRate : $salaryRate,
-                            'displayDate' => $raiseEffectiveDate->format('Y-m-d'), // Effective Date
-                            'startDate' => $raiseEffectiveDate->format('Y-m-d'), // For Debugging purposes only
-                            'endDate' => $raiseEndDate->format('Y-m-d') // For Debugging purposes only
-                        ]);                      
-                    }                    
+                            'rate' => $salaryRate,
+                            'effectiveDate' => $salaryDate->format('Y-m-d'), // Effective Date
+                            'endDate' => $raiseEndDate // For Debugging purposes only
+                        ]);                           
+                    }
+                    $lastRate = $salaryRate; 
+                    break;
                 }
-
-                $lastRate = $salaryRate; 
             }
 
             // If salary level is less than 9, add one
             if ($salaryLevel < 9) {
                 $salaryLevel++;
             }
-
+            
             $salaryDate = $salaryDate->addOneYear();
             $days = (int)$salaryDate->diff($currentDate)->format('%R%a');
+                
 
         } while ($days> 0); // Check each anniversary date until today
 
@@ -253,34 +208,28 @@ function getSalaryHistory(CustomDateTime $hireDate, int $startLevel) {
 
     // Query database for the salary
     // for a given level
-    function getSalary(int $salaryLevel, CustomDateTime $salaryDate) {
+    function getSalary(int $level, CustomDateTime $fromDate) {
 
         $db_conn = connectDB();
-        
-        $effectiveDate = $salaryDate;
-        $endDate = $salaryDate->addOneYear();
 
         // query database
         $querySQL = "SELECT 
                 s1.salary_level
-                , s1.effective_date
+                , IFNULL((SELECT DATE_ADD(s2.end_date, INTERVAL 1 DAY) from salaries s2 where s2.salary_level = s1.salary_level and s2.end_date < s1.end_date order by s2.end_date desc limit 1), '1900-01-01 00:00') as 'effective_date'
                 , s1.end_date
                 , s1.salary_per_annum
 
             FROM salaries s1
 
-            WHERE s1.salary_level = :salary_level
-
-
-            AND s1.effective_date < :end_date
-            AND s1.end_date > :effective_date
+            WHERE salary_level = :salary_level
+            AND end_date >= :from_date
 
             ORDER BY end_date";
 
         $data = array(
-                    ":salary_level" => $salaryLevel,
-                    ":effective_date" => (string)$effectiveDate,
-                    ":end_date" => (string)$endDate);
+                        ":from_date" => (string)$fromDate,
+                        ":salary_level" => $level)
+                    ;
 
         $stmt = $db_conn->prepare($querySQL);
 

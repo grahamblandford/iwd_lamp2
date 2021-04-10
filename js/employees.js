@@ -6,6 +6,8 @@
 
 // 20210404      SKC     Added retirement functionality                
 // 20210407      GPB     Y-m-d format in form                
+// 20210410      GPB     Combined Retirement fields & re-wording
+//                       for styling purposes (mobile view)                
 
 $(document).ready(function() {
 
@@ -95,7 +97,7 @@ $(document).ready(function() {
                 retirement_full_date = retirement_year + "-" + checkMonthDate(retirement_month) + "-" + checkMonthDate(retirement_date);
             }
 
-            retirement_scenario = retireA <= retireB ? "A (Date turning Age 65)" : "B (Date when Age + Service Years = 85)";
+            retirement_scenario = retireA <= retireB ? "Age = 65 (A)" : "Age + Service Years = 85 (B)";
         } else {
             retirement_full_date = '';
             retirement_scenario = '';
@@ -126,8 +128,10 @@ $(document).ready(function() {
             $('#gender').val(employee.gender);
             $('#date-hired').val(employee.date_hired);
             $('#hired-salary-level').val(employee.hired_salary_level);
-            $('#earliest-retirement-date').val(retirement_full_date);
-            $('#retirement-scenario').val(retirement_scenario);
+
+            // $('#earliest-retirement-date').val(retirement_full_date);
+            // $('#retirement-scenario').val(retirement_scenario);
+            $('#earliest-retirement').val(retirement_full_date + " - " + retirement_scenario);
 
                 retirement_full_date = '';
                 retirement_scenario = '';

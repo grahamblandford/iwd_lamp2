@@ -9,11 +9,11 @@
 body {
     padding-top: 5rem;   
     font-family: 'Catamaran', 'Metrophobic', sans-serif;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .bd-placeholder-img {
-    font-size: 1.125rem;
+    /* font-size: 1.125rem; */
     text-anchor: middle;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -37,14 +37,18 @@ body {
     /* Remove header columns for mobile */
     #thead-employees > tr > :nth-child(5)
     , #thead-employees > tr > :nth-child(7)
-    , #thead-employees > tr > :nth-child(8) { 
+    , #thead-employees > tr > :nth-child(8)
+    , #thead-employees > tr > :nth-child(9)
+    , #thead-employees > tr > :nth-child(10) { 
         display: none;
     }
     
     /* Remove body columns for mobile */
     #tbody-employees > tr > :nth-child(5)
     , #tbody-employees > tr > :nth-child(7)
-    , #tbody-employees > tr > :nth-child(8) { 
+    , #tbody-employees > tr > :nth-child(8)
+    , #tbody-employees > tr > :nth-child(9)
+    , #tbody-employees > tr > :nth-child(10) { 
         display: none;
     }
 
@@ -65,6 +69,7 @@ body {
 
 #form-employee {
     margin-top: 0 !important;
+    padding-right: 0 !important;
 }
 
 .form-inline {
@@ -168,7 +173,7 @@ legend {
 }
 
 .btn-crud {
-    min-width: 100px;
+    min-width: 80px;
 }
 
 .btn-crud img {
