@@ -121,8 +121,10 @@ $(document).ready(function() {
             $('#gender').val(employee.gender);
             $('#date-hired').val(employee.date_hired);
             $('#hired-salary-level').val(employee.hired_salary_level);
-            $('#earliest-retirement-date').val(retirement_full_date);
-            $('#retirement-scenario').val(retirement_scenario);
+            // $('#earliest-retirement-date').val(retirement_full_date);
+            // $('#retirement-scenario').val(retirement_scenario);
+
+            $('#earliest-retirement').val(retirement_full_date + ' - ' + retirement_scenario);
 
             retirement_full_date = '';
             retirement_scenario = '';
