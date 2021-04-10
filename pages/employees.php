@@ -232,7 +232,7 @@ if ( isset($_SESSION['text-search']) ) {
                                             class='btn btn-info btn-crud'
                                             id='btn-history'
                                             name='btn-history'
-                                            onclick="(function() { window.open(`./salaryHistory.php?hired=${document.getElementById('date-hired').value}&level=${document.getElementById('hired-salary-level').value}&type=${document.getElementById('job-type').value}`, `_blank`, 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=0,width=500,height=500'); })()"
+                                            onclick="(function() { window.open(`./salaryHistory.php?hired=${document.getElementById('date-hired').value}&level=${document.getElementById('hired-salary-level').value}&type=${document.getElementById('job-type').value}`, `salary_history`, 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=0,width=500,height=500'); })()"
                                         >
                                             Show History
                                         </button>
