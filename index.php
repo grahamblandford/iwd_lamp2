@@ -51,14 +51,14 @@ include_once("./pages/check_session.php");
         <div class="starter-template text-center py-5 px-3">
             <h1>INFO-5094-01-21W - LAMP 2 Project - Employee Information</h1>
             <h2>Group 9</h2>
-            <h3>
+            <h4>
             Graham Blandford<br>
             Sung-Kyu Choi<br>
             Jordan Foster<br>
             Taehyung Kim<br>
-            Mykyta Koryliuk<br></h3>
-            <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text
-                and a mostly barebones HTML document.</p>
+            Mykyta Koryliuk<br></h4>
+            <!-- <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text
+                and a mostly barebones HTML document.</p> -->
         </div>
 
     </main>
