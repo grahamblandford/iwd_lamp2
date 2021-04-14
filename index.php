@@ -15,6 +15,8 @@ include_once("./pages/check_session.php");
         Purpose:     Main page
         Author:      T. Kim,  Group 9, INFO-5094-01-21W
         Date:        January 30th, 2021 (March 1st, 2021)
+
+        20210413    GPB Update Description
     -->
 
     <!-- Required meta tags -->
@@ -47,7 +49,14 @@ include_once("./pages/check_session.php");
     <main class="container">
 
         <div class="starter-template text-center py-5 px-3">
-            <h1>Update test </h1>
+            <h1>INFO-5094-01-21W - LAMP 2 Project - Employee Information</h1>
+            <h2>Group 9</h2>
+            <h3>
+            Graham Blandford<br>
+            Sung-Kyu Choi<br>
+            Jordan Foster<br>
+            Taehyung Kim<br>
+            Mykyta Koryliuk<br></h3>
             <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text
                 and a mostly barebones HTML document.</p>
         </div>

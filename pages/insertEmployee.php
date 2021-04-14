@@ -7,6 +7,8 @@
 
     20210301    GPB Added check_session.php
     20210303    GPB Added id tags for css corrections
+    20210413    GPB Redirect Show data to employees.php
+
 -->
 <?php
 session_start();
@@ -170,32 +172,34 @@ include_once("./check_session.php");
         }
         function showDataFromDatabase()
         {
-            global $db_conn;
-            $temp_arrs = [];
-            $stmt = $db_conn->prepare("Select employee_id, last_name, first_name, middle_name, date_of_birth, gender, date_hired, hired_salary_level, job_type, last_updated_user_id from employees");
-            try {
-                $stmt->execute();
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    $details = [
-                        $row['employee_id'],
-                        $row['last_name'],
-                        $row['first_name'],
-                        $row['middle_name'],
-                        $row['date_of_birth'],
-                        $row['gender'],
-                        $row['date_hired'],
-                        $row['hired_salary_level'],
-                        $row['job_type'],
-                    ];
-                    array_push($temp_arrs, $details);
-                }
-                // showTable
-                makeTable($temp_arrs);
-                unset($temp_arrs);
-            } catch (Exception $e) {
-                $db_conn->rollback();
-                echo $e->getMessage();
-            }
+            header( 'location: ./employees.php');
+
+            // global $db_conn;
+            // $temp_arrs = [];
+            // $stmt = $db_conn->prepare("Select employee_id, last_name, first_name, middle_name, date_of_birth, gender, date_hired, hired_salary_level, job_type, last_updated_user_id from employees");
+            // try {
+            //     $stmt->execute();
+            //     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            //         $details = [
+            //             $row['employee_id'],
+            //             $row['last_name'],
+            //             $row['first_name'],
+            //             $row['middle_name'],
+            //             $row['date_of_birth'],
+            //             $row['gender'],
+            //             $row['date_hired'],
+            //             $row['hired_salary_level'],
+            //             $row['job_type'],
+            //         ];
+            //         array_push($temp_arrs, $details);
+            //     }
+            //     // showTable
+            //     makeTable($temp_arrs);
+            //     unset($temp_arrs);
+            // } catch (Exception $e) {
+            //     $db_conn->rollback();
+            //     echo $e->getMessage();
+            // }
         }
 
         function duplicateCheck()
