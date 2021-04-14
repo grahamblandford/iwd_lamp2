@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 10, 2021 at 07:54 AM
+-- Generation Time: Apr 14, 2021 at 06:07 AM
 -- Server version: 8.0.23-0ubuntu0.20.04.1
 -- PHP Version: 7.4.3
 
@@ -24,7 +24,6 @@ USE `lamp`;
 -- Table structure for table `employees`
 --
 
-DROP TABLE IF EXISTS `employees`;
 CREATE TABLE `employees` (
   `employee_id` int NOT NULL,
   `first_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
@@ -39,18 +38,25 @@ CREATE TABLE `employees` (
   `last_updated_user_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `employees`
+--
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `employee_files`
 --
 
-DROP TABLE IF EXISTS `employee_files`;
 CREATE TABLE `employee_files` (
   `file_id` int NOT NULL,
   `file_name` varchar(27) NOT NULL,
   `last_update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `employee_files`
+--
 
 -- --------------------------------------------------------
 
@@ -58,7 +64,6 @@ CREATE TABLE `employee_files` (
 -- Table structure for table `salaries`
 --
 
-DROP TABLE IF EXISTS `salaries`;
 CREATE TABLE `salaries` (
   `salary_level` int NOT NULL,
   `effective_date` datetime NOT NULL,
@@ -108,23 +113,12 @@ INSERT INTO `salaries` (`salary_level`, `effective_date`, `end_date`, `salary_pe
 (9, '2020-03-14 00:00:00', '2020-12-31 00:00:00', '79458.00'),
 (9, '2021-01-01 00:00:00', '2021-12-31 00:00:00', '80252.58');
 
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `salaries`
---
-ALTER TABLE `salaries`
-  ADD PRIMARY KEY (`salary_level`,`end_date`);
-COMMIT;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `user_id` varchar(255) NOT NULL,
   `password` varchar(100) NOT NULL,
@@ -174,11 +168,11 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `employee_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `employee_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=401;
 
 --
 -- AUTO_INCREMENT for table `employee_files`
 --
 ALTER TABLE `employee_files`
-  MODIFY `file_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `file_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
