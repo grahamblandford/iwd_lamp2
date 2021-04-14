@@ -8,6 +8,7 @@
     20210301    GPB Added check_session.php
     20210303    GPB Added id tags for css corrections
     20210413    GPB Redirect Show data to employees.php
+    20210413    TK  Change the upload function
 
 -->
 <?php
@@ -57,111 +58,35 @@ include_once("./check_session.php");
         $msg = "";
         $field_data = sanitize_html($_POST);
 
-        // When file is uploaded..
-        if (file_exists($_FILES['file']['tmp_name']) || is_uploaded_file($_FILES['file']['tmp_name'])) {
-            // Check the Meta Data
-
-            // dump(pathinfo( $_FILES['file']['name'], PATHINFO_EXTENSION));
-
-            if (($_FILES['file']['type'] == 'text/csv'
-                    || (pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION) == 'csv'
-                        && $_FILES['file']['type'] == 'application/vnd.ms-excel'))
-                && $_FILES['file']['error'] == 0
-            ) {
-                // if ($_FILES['file']['type'] == 'text/csv' && $_FILES['file']['error'] == 0) {
-                $destination_path = '../file/';
-                $destination_file = 'employeeList_' . time() . '.csv';
-                if (move_uploaded_file($_FILES['file']['tmp_name'], $destination_path . $destination_file)) {
-                    // Insert file name to Database
-                    try {
-                        $db_conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                        $sql = "INSERT INTO employee_files (file_name) VALUES ('$destination_file')";
-                        $db_conn->exec($sql);
-                    } catch (PDOException $e) {
-                        echo $sql . "<br>" . $e->getMessage();
-                    }
-                    // truncate employee table
-                truncateDB();
-
-                // set insert count
-                $num = 0;
-
-                // Read file from permanent location
-                if (($handle = fopen($destination_path . $destination_file, "r")) !== FALSE) {
-                    $num = 0;
-                    //RegExp for date "1234-12-12"
-                    $datePattern = "/[0-9]{4}-[0-9]{2}-[0-9]{2}/";
-
-                    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-                        // Read data in one line at a time
-                        // Check the Validation
-
-                        // FirstName
-                        if (is_string($data[0]) == false) {
-                            $msg = $data[0] . " cannot be used as a First name.";
-                        }
-                        // LastName
-                        elseif (is_string($data[1]) == false) {
-                            $msg = $data[1] . " cannot be used as a Last name.";
-                        }
-                        // MiddleName
-                        elseif ($data[2] != '') {
-                            if (is_string($data[2]) == false)
-                                $msg = $data[2] . " cannot be used as a Middle name.";
-                        }
-                        // Birth Date
-                        elseif (preg_match_all($datePattern, $data[3]) != 1) {
-                            $msg = $data[3] . " cannot be used as a Birth Date.";
-                        }
-                        // Gender
-                        elseif ($data[4] != "Male" && $data[4] != "Female") {
-                            $msg = $data[4] . " cannot be used as a Gender.";
-                        }
-                        // Hired Date
-                        elseif (preg_match_all($datePattern, $data[5]) != 1) {
-                            $msg = $data[5] . " cannot be used as a Hired Date.";
-                        }
-                        // Level
-                        elseif (preg_match_all("/[0-9]{1}/", $data[6]) != 1) {
-                            $msg = $data[6] . " cannot be used as a Level.";
-                        }
-                        // Job Type
-                        elseif ($data[7] != "FT" && $data[7] != "PT") {
-                            $msg = $data[7] . " cannot be used as a Job Type.";
-                        }
-                        // if $msg have message,
-                        if (strlen($msg) != 0) {
-                            makeHeader('red');
-                            break;
-                        } else {
-                            // Data Insert Here
-                            insertEmp($data);
-                            $num++;
+        if (isset($field_data['submit'])) {
+            $array_file_extension = array('csv');
+            $errArray = array();
+            foreach ($_FILES as $eachfile) {
+                // When file exist
+                if ($eachfile['name'] != "") {
+                    if ($eachfile['type'] == "" || $eachfile['tmp_name'] == "" || $eachfile["size"] == 0 || $eachfile['error'] != 0) {
+                        array_push($errArray, $eachfile['name']);
+                    } else {
+                        $ext = pathinfo(strtolower($eachfile['name']), PATHINFO_EXTENSION);
+                        if (!in_array($ext, $array_file_extension)) {
+                            array_push($errArray, $eachfile['name']);
                         }
                     }
-                    fclose($handle);
-                }
-
-                $msg =  $num . ' data is inserted.';
-
-                // Duplicate Check Here
-                duplicateCheck();
-                // show date from database
-                showDataFromDatabase();
-
-                }else{
-                    $msg = 'File upload failed.';
+                }else {
+                    $msg = "Please select the CSV file. ";
                     makeHeader('red');
-                    showUploadForm();    
+                    showUploadForm();
                 }
-
-
-
-                
-            } else {
-                $msg = 'It is not a CSV file. Please upload again.';
+            }
+            if (count($errArray) > 0) {
+                $msg = "There is an error in the file: ";
+                foreach ($errArray as $fileN) {
+                    $msg .= $fileN . " ";
+                }
                 makeHeader('red');
                 showUploadForm();
+            } else {
+                uploadEmployees();
             }
         } else if (isset($field_data['showdata'])) {
             showDataFromDatabase();
@@ -170,9 +95,107 @@ include_once("./check_session.php");
         else {
             showUploadForm();
         }
+
+        function uploadEmployees()
+        {
+            global $db_conn;
+            $destinations = array();
+            //file upload
+            $destination_path = '../file/';
+            foreach ($_FILES as $eachfile) {
+                if ($eachfile['tmp_name'] != "") {
+                    $FileExt = substr(strrchr($eachfile['name'], "."), 1);
+                    //$FileName = substr($eachfile['name'], 0, strlen($eachfile['name']) - strlen($FileExt) - 1);
+                    $destination_file = 'employeeList_' . time() . '.' . $FileExt;
+                    if (!move_uploaded_file($eachfile['tmp_name'], $destination_path . $destination_file)) {
+                        echo "<p>Error: File Upload<br>Message: File upload failed.</p><br>";
+                        showUploadForm();
+                        //return;
+                    } else {
+                        // Insert file name to Database
+                        try {
+                            $db_conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                            $sql = "INSERT INTO employee_files (file_name) VALUES ('$destination_file')";
+                            $db_conn->exec($sql);
+                        } catch (PDOException $e) {
+                            echo $sql . "<br>" . $e->getMessage();
+                        }
+                        // truncate employee table
+                        truncateDB();
+
+                        // set insert count
+                        $num = 0;
+
+                        // Read file from permanent location
+                        if (($handle = fopen($destination_path . $destination_file, "r")) !== FALSE) {
+                            $num = 0;
+                            //RegExp for date "1234-12-12"
+                            $datePattern = "/[0-9]{4}-[0-9]{2}-[0-9]{2}/";
+
+                            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                                // Read data in one line at a time
+                                // Check the Validation
+
+                                // FirstName
+                                if (is_string($data[0]) == false) {
+                                    $msg = $data[0] . " cannot be used as a First name.";
+                                }
+                                // LastName
+                                elseif (is_string($data[1]) == false) {
+                                    $msg = $data[1] . " cannot be used as a Last name.";
+                                }
+                                // MiddleName
+                                elseif ($data[2] != '') {
+                                    if (is_string($data[2]) == false)
+                                        $msg = $data[2] . " cannot be used as a Middle name.";
+                                }
+                                // Birth Date
+                                elseif (preg_match_all($datePattern, $data[3]) != 1) {
+                                    $msg = $data[3] . " cannot be used as a Birth Date.";
+                                }
+                                // Gender
+                                elseif ($data[4] != "Male" && $data[4] != "Female") {
+                                    $msg = $data[4] . " cannot be used as a Gender.";
+                                }
+                                // Hired Date
+                                elseif (preg_match_all($datePattern, $data[5]) != 1) {
+                                    $msg = $data[5] . " cannot be used as a Hired Date.";
+                                }
+                                // Level
+                                elseif (preg_match_all("/[0-9]{1}/", $data[6]) != 1) {
+                                    $msg = $data[6] . " cannot be used as a Level.";
+                                }
+                                // Job Type
+                                elseif ($data[7] != "FT" && $data[7] != "PT") {
+                                    $msg = $data[7] . " cannot be used as a Job Type.";
+                                }
+                                // if $msg have message,
+                                if (strlen($msg) != 0) {
+                                    makeHeader('red');
+                                    break;
+                                } else {
+                                    // Data Insert Here
+                                    insertEmp($data);
+                                    $num++;
+                                }
+                            }
+                            fclose($handle);
+                        }
+
+                        $msg =  $num . ' data is inserted.';
+
+                        // Duplicate Check Here
+                        duplicateCheck();
+                        // show date from database
+                        showDataFromDatabase();
+                    }
+                }
+            }
+        }
+
         function showDataFromDatabase()
         {
-            header( 'location: ./employees.php');
+            header('location: ./employees.php');
 
             // global $db_conn;
             // $temp_arrs = [];
