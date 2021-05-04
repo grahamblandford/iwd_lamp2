@@ -6,4 +6,4 @@ It is set to private Git to prevent code leakage. We invite you if you let us kn
 
 **Server Address:** [https://lamp.fanshawe21w.tk/](https://lamp.fanshawe21w.tk/)
 
-**Username/Password:**  admin/admin 
+**Username/Password:**  admin/admin
