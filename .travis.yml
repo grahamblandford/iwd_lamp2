@@ -10,23 +10,23 @@ cache:
 notifications:
   email:
     recipients:
-      - taehyungkim@outlook.com
+      - developer@parabola-solutions.com
 
 deploy:
 - provider: s3
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_KEY
+  access_key_id: "AKIA4CIWM6RZVOGMM7XC"
+  secret_access_key: "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"
   local_dir: dpl_cd_upload
   skip_cleanup: true
   on: &2
-    repo: TaehyungAlexKim/Lamp2Project
+    repo: grahamblandford/iwd_lamp2
     branch: main
-  bucket: lamp-fanshawe
+  bucket: lamp-bucket
   region: us-east-2
 - provider: codedeploy
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_KEY
-  bucket: lamp-fanshawe
+  access_key_id: "AKIA4CIWM6RZVOGMM7XC"
+  secret_access_key: "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"
+  bucket: lamp-bucket
   key: latest.zip
   bundle_type: zip
   application: lamp
