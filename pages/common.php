@@ -6,7 +6,7 @@ date_default_timezone_set('America/Toronto');
 define("DBHOST", "localhost");
 define("DBDB",   "lamp");
 define("DBUSER", "lamp");
-define("DBPW", "LQBXwyMZBpJZwIAn");
+define("DBPW", "BFUNlxQ0FAu4mDnG!");
 
 
 //Connect to database using PDO method
