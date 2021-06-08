@@ -52,7 +52,7 @@ include_once("./pages/check_session.php");
             <h1>INFO-5094-01-21W - LAMP 2 Project - Employee Information</h1>
             <h2>Group 9</h2>
             <h4>
-            Graham Blandford<br>
+            Graham Blandford<br><br>
             Sung-Kyu Choi<br>
             Jordan Foster<br>
             Taehyung Kim<br>
