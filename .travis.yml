@@ -21,16 +21,16 @@ deploy:
   on: &2
     repo: grahamblandford/iwd_lamp2
     branch: main
-  bucket: lamp-fanshawe
+  bucket: lamp-bucket
   region: us-east-2
 - provider: codedeploy
   access_key_id: $AWS_ACCESS_KEY
   secret_access_key: $AWS_SECRET_KEY
-  bucket: lamp-fanshawe
+  bucket: lamp-bucket
   key: latest.zip
   bundle_type: zip
-  application: lamp
-  deployment_group: lamp
+  application: iwd-lamp2
+  deployment_group: iwd-lamp2-deployment-group
   region: us-east-2
   on: *2
 
