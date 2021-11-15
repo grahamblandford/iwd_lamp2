@@ -6,7 +6,7 @@ os: linux
 files:
   - source: /
     destination: /var/www/html/iwd_lamp2/
-
+    file_exists_behavior: OVERWRITE
 permissions:
   - object: /
     pattern: "**"
